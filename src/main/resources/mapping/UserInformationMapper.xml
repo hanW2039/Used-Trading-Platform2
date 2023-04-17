@@ -30,6 +30,14 @@
     where id = #{id,jdbcType=INTEGER}
     limit 1
   </select>
+
+  <select id="selectUserInformationByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="all" />
+    from <include refid="table"/>
+    where phone = #{phone}
+  </select>
+
   <select id="selectIdByPhone" resultType="java.lang.Integer" parameterType="java.lang.String">
     select id
     FROM <include refid="table"/>
