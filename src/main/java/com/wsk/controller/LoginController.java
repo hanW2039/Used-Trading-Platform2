@@ -120,13 +120,13 @@ public class LoginController {
                         boolean rememberme,
                         HttpSession session){
 
-        String kaptcha = (String)session.getAttribute("kaptcha");
+//        String kaptcha = (String)session.getAttribute("kaptcha");
 
-//        String kaptcha = null;
-//        if(StringUtils.isNoneBlank(kaptchaOwner)){
-//            String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
-//            kaptcha = (String)redisTemplate.opsForValue().get(redisKey);
-//        }
+        String kaptcha = null;
+        if(StringUtils.isNoneBlank(kaptchaOwner)){
+            String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+            kaptcha = (String)redisTemplate.opsForValue().get(redisKey);
+        }
 
         //equalsIgnoreCase()方法忽略大小写
         //检查验证码
@@ -145,7 +145,7 @@ public class LoginController {
             cookie.setMaxAge(expiredSeconds);
             //响应时返回cookie
             response.addCookie(cookie);
-            return "redirect:/index";
+            return "redirect:/";
         }else{
             model.addAttribute("usernameMsg",map.get("usernameMessage"));
             model.addAttribute("passwordMsg",map.get("passwordMessage"));

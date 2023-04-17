@@ -1,11 +1,11 @@
 package com.wsk.service;
 
 import com.wsk.pojo.UserInformation;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
 /**
- * Created by wsk1103 on 2017/4/26.
+ * @author wh
  */
 public interface UserInformationService {
     int deleteByPrimaryKey(Integer id);

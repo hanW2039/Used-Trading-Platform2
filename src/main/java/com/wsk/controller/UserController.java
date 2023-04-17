@@ -77,7 +77,7 @@ public class UserController {
         log.info("进入登录界面，token为:" + token);
         request.getSession().setAttribute("token", token);
         model.addAttribute("token", token);
-        return "page/login_page";
+        return "login";
     }
 
     //退出

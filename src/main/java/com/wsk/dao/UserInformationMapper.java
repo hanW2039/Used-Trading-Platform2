@@ -1,6 +1,7 @@
 package com.wsk.dao;
 
 import com.wsk.pojo.UserInformation;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,6 +13,13 @@ public interface UserInformationMapper {
     int insertSelective(UserInformation record);
 
     UserInformation selectByPrimaryKey(Integer id);
+
+    /**
+     * 查询用户信息
+     * @param phone
+     * @return
+     */
+    UserInformation selectUserInformationByPhone(String phone);
 
     int updateByPrimaryKeySelective(UserInformation record);
 
