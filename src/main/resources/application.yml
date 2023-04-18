@@ -24,6 +24,17 @@ spring:
     database: 0
     host: 127.0.0.1
     port: 6379
+  mail:
+    host: smtp.sina.com
+    username: hanwcommunity@sina.com
+    password: 69560aa74287aece
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
 #  mvc:
 #    static-path-pattern: classpath:/resources/static/**
 #  resources:
@@ -46,3 +57,4 @@ logging:
 #    rollingpolicy:
 #      max-history: 60
 #  path: ./logs
+
