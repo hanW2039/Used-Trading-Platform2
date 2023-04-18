@@ -1,3 +1,6 @@
+#server:
+#  servlet:
+#    context-path: /trading
 spring:
   application:
     name: my
@@ -9,7 +12,7 @@ spring:
     default-property-inclusion: non_null
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/c2c
+    url: jdbc:mysql://localhost:3306/c2c?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
     username: root
     password: qwer53231323
   thymeleaf:
@@ -17,6 +20,10 @@ spring:
     suffix: .html
     mode: HTML5
     encoding: UTF-8
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
 #  mvc:
 #    static-path-pattern: classpath:/resources/static/**
 #  resources:
