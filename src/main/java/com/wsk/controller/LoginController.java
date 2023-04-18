@@ -44,7 +44,7 @@ public class LoginController {
 
     @RequestMapping(path ="/login",method = RequestMethod.GET)
     public String getLoginPage(){
-        return "login";
+        return "new/login";
     }
 //    @RequestMapping(path = "/register",method = RequestMethod.GET)
 //    public String getRegisterPage() { return "/site/register"; }
@@ -132,7 +132,7 @@ public class LoginController {
         //检查验证码
         if(StringUtils.isBlank(kaptcha) || StringUtils.isBlank(code) || !code.equalsIgnoreCase(kaptcha)){
             model.addAttribute("codeMsg","验证码不正确！");
-            return "login";
+            return "new/login";
         }
         //验证账号、密码
         int expiredSeconds = rememberme? Constant.REMEMBER_EXPIRED_SECONDS:Constant.DEFAULT_EXPIRED_SECONDS;
@@ -145,11 +145,11 @@ public class LoginController {
             cookie.setMaxAge(expiredSeconds);
             //响应时返回cookie
             response.addCookie(cookie);
-            return "redirect:/";
+            return "redirect:/index";
         }else{
             model.addAttribute("usernameMsg",map.get("usernameMessage"));
             model.addAttribute("passwordMsg",map.get("passwordMessage"));
-            return "login";
+            return "new/login";
         }
     }
 //    @RequestMapping(path="/logout",method=RequestMethod.GET)
