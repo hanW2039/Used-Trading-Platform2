@@ -1,10 +1,13 @@
+.main .container {
+	width: 720px;
+}
+
 *{
 	padding: 0px;
 	margin: 0px;
 	font-family: Microsoft Yahei;
 	box-sizing: border-box;
 }
-
 /*navbar*/
 .navbar{
 	height: 200px;
@@ -32,7 +35,7 @@
 	font-size: 14px;
 	line-height: 40px;
 	margin-left: 5px;
-	margin-right:25px; 
+	margin-right:25px;
 }
 
 .nav-info a:hover{
@@ -85,7 +88,7 @@
 	color: white;
 	font-size: 18px;
 	cursor: pointer;
-	transition: all 0.3s;	
+	transition: all 0.3s;
 }
 
 .searchBtn:hover{
@@ -112,7 +115,7 @@
 }
 .search-logo img{
 	width: 20px;
-	margin-left:-6px; 
+	margin-left:-6px;
 }
 
 .menu{
@@ -129,8 +132,8 @@
 
 .menu li a:hover{
 	font-weight: 600;
-	border: solid #b5aa9a; 
-	border-width: 0 0 2px 0;	
+	border: solid #b5aa9a;
+	border-width: 0 0 2px 0;
 }
 
 .menu li{
@@ -139,7 +142,7 @@
 	justify-content: space-around;
 	/*margin-left: 140px;*/
 	padding-top: 18px;
-	margin-right: 100px; 
+	margin-right: 100px;
 
 }
 .menu a{
@@ -149,7 +152,7 @@
 
 .menu li a.active{
 	font-weight: 600;
-	border: solid #b5aa9a; 
+	border: solid #b5aa9a;
 	border-width: 0 0 2px 0;
 }
 
@@ -315,7 +318,7 @@ table {
 
 .book-part{
 	width:90%;
-	height: auto; 
+	height: auto;
 	display: flex;
 	flex-wrap: wrap;
 	position: relative;
@@ -334,7 +337,7 @@ table {
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 20px;
-	color: #4b4d52;	
+	color: #4b4d52;
 }
 
 
@@ -356,8 +359,8 @@ table {
 	/*background-color: #ccc;*/
 	display: flex;
 	justify-content: flex-start;
-	margin-top:15px; 
-	margin-bottom:5px; 
+	margin-top:15px;
+	margin-bottom:5px;
 	flex-wrap: wrap;
 }
 
@@ -388,7 +391,7 @@ table {
 }
 
 .book-pic img{
-	margin:auto;	
+	margin:auto;
 	width: 150px;
 }
 
@@ -447,7 +450,7 @@ table {
 	width: 40px;
 	height: 36px;
 	padding: 5px;
-	margin-left: 45px; 
+	margin-left: 45px;
 	text-decoration: none;
 	color: white;
 	font-size: 13px;

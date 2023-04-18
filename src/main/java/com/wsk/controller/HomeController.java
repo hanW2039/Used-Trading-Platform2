@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wsk1103 on 2017/5/11.
+ * wh
  */
 @Controller
 public class HomeController {
@@ -34,8 +34,15 @@ public class HomeController {
     @Resource
     private ShopContextService shopContextService;
 
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+    public String login() {
+        return "new/login";
+//        return "new/register1";
+    }
 
-    @RequestMapping(value = {"/", "/home.do"})
+
+
+    @RequestMapping(value = {"/home.do"})
     public String home(HttpServletRequest request, Model model) {
         UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
         // if user login,the session will have the "userInformation"
