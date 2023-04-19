@@ -1,6 +1,9 @@
 #server:
 #  servlet:
 #    context-path: /trading
+
+server:
+  port: 8888
 spring:
   application:
     name: my
