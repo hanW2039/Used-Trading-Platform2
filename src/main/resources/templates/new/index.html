@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html>
 
 <head>
-	<title>校园二手书交易平台</title>
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<meta charset="utf-8">
+	<title>乐淘淘</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
 </head>
 
 <body>
@@ -11,30 +13,31 @@
 	<!-- 导航 -->
 	<header class="navbar">
 		<div class="nav-info">
-			<a href="#" class="username">你的名字</a>
-			<a href="myBookself.html" class="bookshelf">||&nbsp;&nbsp;&nbsp;我的书架</a>
-			<a href="login.html" class="logout">[ 退 出 ]</a>
+			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
+			<a href="myBookself.html" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 		</div> <!-- nav-info -->
 		<form class="nav-search">
 			<a href="index.html"><img class="logo" src="img/logo2.png"></a>
 			<div class="search-form">
 				<a href="#" class="search-logo">| &nbsp;<img src="img/search.png"></a>
-				<input type="search" class="searchIn" placeholder="搜图书...">
+				<input type="search" class="searchIn" placeholder="搜商品...">
 				<button class="searchBtn">搜索</button>
 			</div>
 		</form><!--  nav-search -->
 		<ul class="menu">
-			<li><a class="active" href="index.html">首页</a></li>
+			<li><a class="active" th:href="@{/index}">首页</a></li>
 			<li><a href="bookStore.html">书籍良品</a></li>
 			<li><a href="askBook.html">求书区</a></li>
-
 		</ul>
 	</header>
 
 	<!-- 轮播 -->
 	<div class="carousel">
 		<div class="book-guide">
-			<h4>图书导航</h4>
+			<h4>商品导航</h4>
 			<ul class="book-class">
 				<li><a href="#article" title="article">小说 / 文学 / 语言文字</a></li>
 				<li><a href="#technology" title="technology">历史 / 地理 / 艺术</a></li>
@@ -44,7 +47,6 @@
 				<li><a href="#">童书 / 生活 / 体育</a></li>
 				<li><a href="#">教材 / 教辅 / 考试</a></li>
 				<li><a href="#technology" title="technology">工程技术 / 互联网</a></li>
-				<li><a href="#">自然科学 / 医药卫生</a></li>
 			</ul>
 		</div><!-- book-guide -->
 		<div class="slider">
@@ -209,8 +211,8 @@
 	<footer>
 		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>
 	</footer>
-	<script type="text/javascript" src="js/jquery-3.2.js"></script>
-	<script type="text/javascript" src="js/xSlider.js"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-3.2.js}"></script>
+	<script type="text/javascript" th:src="@{/js/xSlider.js}"></script>
 	<script type="text/javascript">
 		$(function () {
 

@@ -2,6 +2,7 @@ package com.wsk.dao;
 
 import com.wsk.pojo.UserInformation;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +21,20 @@ public interface UserInformationMapper {
      * @return
      */
     UserInformation selectUserInformationByPhone(String phone);
+
+    /**
+     * 根据邮箱查询用户
+     * @param email
+     * @return
+     */
+    UserInformation selectUserInformationByEmail(String email);
+
+    /**
+     * 修改激活状态
+     * @param phone
+     * @param status
+     */
+    void updateStatus(@Param("phone") String phone, @Param("status") String status);
 
     int updateByPrimaryKeySelective(UserInformation record);
 

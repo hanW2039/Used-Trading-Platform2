@@ -13,6 +13,9 @@
     <result column="gender" property="gender" jdbcType="CHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="table">
@@ -21,7 +24,7 @@
 
   <sql id="all" >
     id, modified, username, phone, realname, clazz, sno, dormitory, gender, createtime, 
-    avatar
+    avatar, status, type, email
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,6 +39,13 @@
     <include refid="all" />
     from <include refid="table"/>
     where phone = #{phone}
+  </select>
+
+  <select id="selectUserInformationByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="all" />
+    from <include refid="table"/>
+    where email = #{email}
   </select>
 
   <select id="selectIdByPhone" resultType="java.lang.Integer" parameterType="java.lang.String">
@@ -102,6 +112,15 @@
       <if test="avatar != null" >
         avatar,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -136,6 +155,15 @@
       </if>
       <if test="avatar != null" >
         #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="email != null" >
+        #{email},
       </if>
     </trim>
   </insert>
@@ -189,5 +217,11 @@
       createtime = #{createtime,jdbcType=TIMESTAMP},
       avatar = #{avatar,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatus" parameterType="java.lang.String" >
+    update
+    <include refid="table"/>
+    set status = #{status,jdbcType=INTEGER}
+    where phone = #{phone,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -5,6 +5,7 @@ import com.wsk.pojo.UserPassword;
 import com.wsk.response.BaseResponse;
 import com.wsk.service.UserInformationService;
 import com.wsk.service.UserPasswordService;
+import com.wsk.service.UserService;
 import com.wsk.tool.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created by wsk1103 on 2017/5/9.
- * 注册中心
+ * @author wh
  */
 @Controller
 public class RegisterController {
@@ -31,11 +32,36 @@ public class RegisterController {
     @Resource
     private UserInformationService userInformationService;
 
+    @Resource
+    private UserService userService;
+    /**
+     * 获取注册页面
+     * @return
+     */
     @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
     public String register() {
         return "new/register";
-//        return "new/register1";
     }
+
+    @RequestMapping(path="/register",method=RequestMethod.POST)
+    //只要页面传值，request中的信息如果和user里的属性对应，就会自动赋值
+    public String register(Model model, UserInformation userInformation){
+        Map<String, Object> map = userService.register(userInformation);
+        if(map == null || map.isEmpty()){
+            model.addAttribute("msg","注册成功，我们已经向您的邮箱发送了一封激活邮件，请尽快激活");
+            model.addAttribute("target","/index");
+            return "/new/operate-result";
+        }else{
+            model.addAttribute("usernameMsg",map.get("usernameMessage"));
+            model.addAttribute("passwordMsg",map.get("passwordMessage"));
+            model.addAttribute("emailMsg",map.get("emailMessage"));
+            model.addAttribute("confirmPasswordMsg",map.get("confirmPasswordMessage"));
+            return "/new/register";
+        }
+    }
+
+
+
 
     //开始注册用户
     @RequestMapping("/insertUser.do")
