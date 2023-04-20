@@ -186,12 +186,12 @@ public class GoodsController {
         return shopInformationService.selectByPrimaryKey(id);
     }
 
-    //通过分类选择商品
-    @RequestMapping(value = "/selectBySort.do")
-    @ResponseBody
-    public List<ShopInformation> selectBySort(@RequestParam int sort) {
-        return shopInformationService.selectBySort(sort);
-    }
+//    //通过分类选择商品
+//    @RequestMapping(value = "/selectBySort.do")
+//    @ResponseBody
+//    public List<ShopInformation> selectBySort(@RequestParam int sort) {
+//        return shopInformationService.selectBySort(sort);
+//    }
 
     //分页查询
     @RequestMapping(value = "/selectByCounts.do")

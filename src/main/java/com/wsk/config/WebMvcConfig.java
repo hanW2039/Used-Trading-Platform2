@@ -5,6 +5,7 @@ import com.wsk.controller.interceptor.LoginTicketInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -25,10 +26,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //    @Autowired
 //    private DataInterceptor dataInterceptor;
 
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/**").addResourceLocations("classpath:/resources/");
+//        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+//    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTicketInterceptor)
-                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/**/*.jpg","/**/*.jpg","/**/*.jpeg");
 //         security实现登录权限认证
 //        registry.addInterceptor(loginRequiredInteceptor)
 //                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");

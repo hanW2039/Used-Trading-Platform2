@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>求书区</title>
-	<link rel="stylesheet" type="text/css" href="css/book.css">
+	<title>求购区</title>
+	<link rel="stylesheet" th:href="@{/css/book.css}">
 </head>
 
 <body>
@@ -11,12 +11,14 @@
 	<header>
 		<nav class="navbar">
 			<div class="nav-info">
-				<a href="#" class="username">你的名字</a>
-				<a href="myBookself.html" class="bookshelf">||&nbsp;&nbsp;&nbsp;我的书架</a>
-				<a href="login.html" class="logout">[ 退 出 ]</a>
+				<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+				<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
+				<a href="myBookself.html" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+				<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+				<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 			</div> <!-- nav-info -->
 			<div class="nav-search">
-				<a href="index.html"><img class="logo" src="img/logo2.png"></a>
+				<a href="index.html"><img class="logo" th:src="@{/img/logo2.png}"></a>
 				<div class="search-form">
 					<input type="search" class="searchIn" placeholder="搜图书...">
 					<a href="#" class="search-logo">| &nbsp;<img src="img/search.png"></a>
@@ -24,10 +26,9 @@
 				</div>
 			</div><!--  nav-search -->
 			<ul class="menu">
-				<li><a href="index.html">首页</a></li>
-				<li><a href="bookStore.html">书籍良品</a></li>
-				<li><a class="active" href="#">求书区</a></li>
-
+				<li><a th:href="@{/index}">首页</a></li>
+				<li><a th:href="@{/store}">良品区</a></li>
+				<li><a class="active"th:href="@{/askBook}">求购区</a></li>
 			</ul>
 		</nav>
 		<div class="askBook-pic"></div>
@@ -38,61 +39,6 @@
 			<h3 class="book-title"><a href="#">| 所有求书信息</a></h3>
 
 			<ul class="book-lists">
-				<li class="book-list">
-					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</a>
-					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
-					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
-				</li>
-				<li class="book-list">
-					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</a>
-					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
-					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
-				</li>
-				<li class="book-list">
-					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</a>
-					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
-					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
-				</li>
-				<li class="book-list">
-					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</a>
-					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
-					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
-				</li>
-				<li class="book-list">
-					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</a>
-					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
-					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
-				</li>
 				<li class="book-list">
 					<a href="#" class="book-pic">
 						<img src="img/book-list/article/1.jpg">
@@ -117,7 +63,6 @@
 
 	<!-- 脚本 -->
 	<footer>
-		<a href="#">二手书交易</a>
 		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>
 	</footer>
 </body>

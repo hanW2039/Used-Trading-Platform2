@@ -1,6 +1,8 @@
 package com.wsk.dao;
 
+import com.wsk.pojo.QueryDTO;
 import com.wsk.pojo.ShopInformation;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -31,11 +33,23 @@ public interface ShopInformationMapper {
 
     List<ShopInformation> selectByName(String name);
 
-    //通过分类选择
-    @Select("select * from shopinformation where sort=#{sort} and display =1 limit 12")
-    List<ShopInformation> selectBySort(int sort);
+    /**
+     * 商品查询
+     * @param queryDTO
+     * @return
+     */
+    List<ShopInformation> selectByQueryDTO(QueryDTO queryDTO);
 
+    List<ShopInformation> selectByKindid(Integer Id);
     //选择用户的发布
     @Select("select * from shopinformation where uid=#{uid} and display=1 order by id desc limit 12")
     List<ShopInformation> selectUserReleaseByUid(int uid);
+
+    /**
+     * 分页查询
+     * @param queryDTO
+     * @return
+     */
+    List<ShopInformation> selectByPage(QueryDTO queryDTO);
+
 }

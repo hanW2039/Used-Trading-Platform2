@@ -16,6 +16,8 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="thumbnails" property="thumbnails" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="kindid" property="kindid" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="table">
@@ -24,7 +26,7 @@
 
   <sql id="all" >
     id, modified, name, level, remark, price, sort, display, quantity, transaction, sales,
-    uid, image,thumbnails
+    uid, image,thumbnails, keyword, kindid
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
     select 
@@ -239,4 +241,40 @@
       thumbnails = #{thumbnails,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByQueryDTO" resultType="com.wsk.pojo.ShopInformation">
+    select *
+    from <include refid="table"/>
+    <where>
+      <if test="kindidList != null" >
+        AND kindid IN
+        <foreach item="item" collection="kindidList" separator="," open="(" close=")" index="">
+          #{item, jdbcType=VARCHAR}
+        </foreach>
+      </if>
+      <if test="keyword != null" >
+        AND keyword like concat('%', #{keyword},'%');
+      </if>
+    </where>
+  </select>
+  <select id="selectByKindid" resultType="com.wsk.pojo.ShopInformation" >
+    select
+    <include refid="all" />
+    FROM <include refid="table"/>
+    where kindid = #{kindid}
+    limit 1 , 5
+  </select>
+
+  <select id="selectByPage" resultType="com.wsk.pojo.ShopInformation">
+    select <include refid="all" />
+    from <include refid="table"/>
+    <where>
+<!--      <if test="userId!=0">-->
+<!--        and user_id = #{userId}-->
+<!--      </if>-->
+    </where>
+<!--      order by type desc, score desc, create_time desc-->
+    order by modified desc
+    limit #{offset},#{limit}
+  </select>
 </mapper>

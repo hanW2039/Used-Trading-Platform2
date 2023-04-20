@@ -1,6 +1,7 @@
 package com.wsk.service.Impl;
 
 import com.wsk.dao.ShopInformationMapper;
+import com.wsk.pojo.QueryDTO;
 import com.wsk.pojo.ShopInformation;
 import com.wsk.service.ShopInformationService;
 import org.springframework.stereotype.Service;
@@ -78,12 +79,22 @@ public class ShopInformationServiceImpl implements ShopInformationService{
     }
 
     @Override
-    public List<ShopInformation> selectBySort(int sort) {
-        return shopInformationMapper.selectBySort(sort);
+    public List<ShopInformation> selectByQueryDTO(QueryDTO queryDTO){
+        return shopInformationMapper.selectByQueryDTO(queryDTO);
+    }
+
+    @Override
+    public List<ShopInformation> selectByKindid(Integer id) {
+        return shopInformationMapper.selectByKindid(id);
     }
 
     @Override
     public List<ShopInformation> selectUserReleaseByUid(int uid) {
         return shopInformationMapper.selectUserReleaseByUid(uid);
+    }
+
+    @Override
+    public List<ShopInformation> selectByPage(QueryDTO queryDTO){
+        return shopInformationMapper.selectByPage(queryDTO);
     }
 }

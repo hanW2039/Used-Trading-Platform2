@@ -4,12 +4,11 @@ import com.wsk.bean.ShopInformationBean;
 import com.wsk.pojo.*;
 import com.wsk.service.*;
 import com.wsk.tool.StringUtils;
+import com.wsk.util.HostHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,35 +32,57 @@ public class HomeController {
     private AllKindsService allKindsService;
     @Resource
     private ShopContextService shopContextService;
+    @Resource
+    private UserInformationService userInformationService;
+    @Autowired
+    private HostHolder hostHolder;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
-    public String getIndexPage(Model model, Page page,
-                               @RequestParam(name = "orderMode", defaultValue = "0") int orderMode){
-        //方法调用之前，SpringMVC会自动实例化Model和Page，并将Page注入给Model
-        //所以我们在thymeleaf中可以直接访问Page对象中的数据
-//        page.setRows(discussPostService.findDiscussPostRows(0));
-//        page.setPath("/index?orderMode=" + orderMode);
-//
-//        List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffSet(), page.getLimit(), orderMode);
-//        List<Map<String,Object>> discussPosts = new ArrayList<>();
-//        if(list != null){
-//            for(DiscussPost post : list){
-//                Map<String,Object> map = new HashMap<>();
-//                map.put("post",post);
-//                User user = userService.findUserById(post.getUserId());
-//                map.put("user",user);
-//
-//                long likeCount = likeService.findEntityLikeCount(EMTITY_TYPE_POST, post.getId());
-//                map.put("likeCount",likeCount);
-//
-//                discussPosts.add(map);
-//            }
-//        }
-//
-//        //model的数据，只能在接下来的页面使用(与session域相似)
-//        model.addAttribute("discussPosts",discussPosts);
-//        model.addAttribute("orderMode",orderMode);
+    public String getIndexPage(Model model){
+        List<AllKinds> allKinds = allKindsService.selectAll();
+
+        List<ShopInformationVO> shopList = new ArrayList<>();
+        for(AllKinds kind : allKinds) {
+            ShopInformationVO shopInformationVO = new ShopInformationVO(shopInformationService.selectByKindid(kind.getId()),
+                    kind.getName(),
+                    kind.getName().substring(1));
+            shopList.add(shopInformationVO);
+        }
+        model.addAttribute("shopList", shopList);
+        model.addAttribute("allKinds", allKinds);
         return "new/index";
+    }
+
+    @RequestMapping(path = "/store", method = RequestMethod.GET)
+    public String getBookStore(Model model, Page page) {
+        List<AllKinds> allKinds = allKindsService.selectAll();
+        page.setRows(shopInformationService.getCounts());
+        page.setPath("/store");
+        QueryDTO queryDTO = new QueryDTO();
+        queryDTO.setLimit(page.getLimit());
+        queryDTO.setOffset(page.getOffSet());
+        List<ShopInformation> list = shopInformationService.selectByPage(queryDTO);
+        model.addAttribute("allKinds", allKinds);
+        model.addAttribute("shopList", list);
+        return "new/bookStore";
+    }
+
+    @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
+    public String getBookDetail(Model model, @PathVariable("id") String id) {
+
+        return "new/bookDetail";
+    }
+    @RequestMapping(path = "/askBook", method = RequestMethod.GET)
+    public String getAskBook(Model model) {
+
+        return "new/askBook";
+    }
+
+    @RequestMapping(path = "/myBookSelf", method = RequestMethod.GET)
+    public String getMyBookSelf(Model model) {
+        UserInformation user = hostHolder.getUser();
+        model.addAttribute("user", user);
+        return "new/myBookself";
     }
 
     @RequestMapping(value = {"/home.do"})

@@ -1,5 +1,6 @@
 package com.wsk.service;
 
+import com.wsk.pojo.QueryDTO;
 import com.wsk.pojo.ShopInformation;
 
 import java.util.List;
@@ -33,7 +34,18 @@ public interface ShopInformationService {
 
     List<ShopInformation> selectByName(String name);
 
-    List<ShopInformation> selectBySort(int sort);
+    /**
+     * 根据查询条件查询商品信息
+     * @param queryDTO
+     * @return
+     */
+    List<ShopInformation> selectByQueryDTO(QueryDTO queryDTO);
+
+    List<ShopInformation> selectByPage(QueryDTO queryDTO);
+
+    List<ShopInformation> selectByKindid(Integer Id);
+
+
 
     List<ShopInformation> selectUserReleaseByUid(int uid);
 }

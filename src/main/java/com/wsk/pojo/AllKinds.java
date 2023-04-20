@@ -1,8 +1,14 @@
 package com.wsk.pojo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author wh
+ */
+@Data
 public class AllKinds implements Serializable {
     private Integer id;
 
@@ -10,27 +16,6 @@ public class AllKinds implements Serializable {
 
     private Date modified;
 
-    public Integer getId() {
-        return id;
-    }
+    private String link;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Date getModified() {
-        return (Date) modified.clone();
-    }
-
-    public void setModified(Date modified) {
-        this.modified = (Date) modified.clone();
-    }
 }

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>BookName</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/bookDetail.css">
+	<title>商品详情</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/bookDetail.css}">
 </head>
 
 <body>
@@ -14,13 +13,12 @@
 				<li><a class="active" href="index.html">首页</a></li>
 				<li><a href="bookStore.html">书籍良品</a></li>
 				<li><a href="askBook.html">求书区</a></li>
-
 			</ul>
 		</div><!-- nav-menu -->
 
 		<form class="nav-search">
 			<input type="search" class="searchIn" placeholder="搜图书...">
-			<button class="search-logo"><img src="img/search2.png"></button>
+			<button class="search-logo"><img th:src="@{/img/search2.png}"></button>
 		</form>
 
 		<div class="nav-info">
