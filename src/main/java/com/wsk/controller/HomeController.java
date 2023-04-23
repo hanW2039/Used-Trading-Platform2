@@ -36,6 +36,8 @@ public class HomeController {
     private UserInformationService userInformationService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private UserWantService userWantService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model){
@@ -69,7 +71,8 @@ public class HomeController {
 
     @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
     public String getBookDetail(Model model, @PathVariable("id") String id) {
-
+        ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(Integer.getInteger(id));
+        model.addAttribute("shopInformation", shopInformation);
         return "new/bookDetail";
     }
     @RequestMapping(path = "/askBook", method = RequestMethod.GET)
@@ -81,88 +84,22 @@ public class HomeController {
     @RequestMapping(path = "/myBookSelf", method = RequestMethod.GET)
     public String getMyBookSelf(Model model) {
         UserInformation user = hostHolder.getUser();
+        List<ShopInformation> shopInformationList = shopInformationService.selectUserReleaseByUid(user.getId());
+        List<UserWant> userWants = userWantService.selectByUid(user.getId());
+        model.addAttribute("userWantList", userWants);
+        model.addAttribute("shopInformationList", shopInformationList);
         model.addAttribute("user", user);
         return "new/myBookself";
     }
 
-    @RequestMapping(value = {"/home.do"})
-    public String home(HttpServletRequest request, Model model) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        // if user login,the session will have the "userInformation"
-        if (!StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            model.addAttribute("userInformation", userInformation);
-        } else {
-            userInformation = new UserInformation();
-            model.addAttribute("userInformation", userInformation);
-        }
-        //一般形式进入首页
-        try {
-            List<ShopInformation> shopInformations = selectTen(1, 5);
-            List<ShopInformationBean> list = new ArrayList<>();
-            int counts = getShopCounts();
-            model.addAttribute("shopInformationCounts", counts);
-            String stringBuffer;
-            for (ShopInformation shopInformation : shopInformations) {
-                stringBuffer = getSortName(shopInformation.getSort());
-                ShopInformationBean shopInformationBean = new ShopInformationBean();
-                shopInformationBean.setId(shopInformation.getId());
-                shopInformationBean.setName(shopInformation.getName());
-                shopInformationBean.setLevel(shopInformation.getLevel());
-                shopInformationBean.setPrice(shopInformation.getPrice().doubleValue());
-                shopInformationBean.setRemark(shopInformation.getRemark());
-                shopInformationBean.setSort(stringBuffer);
-                shopInformationBean.setQuantity(shopInformation.getQuantity());
-                shopInformationBean.setUid(shopInformation.getUid());
-                shopInformationBean.setTransaction(shopInformation.getTransaction());
-                shopInformationBean.setImage(shopInformation.getImage());
-                list.add(shopInformationBean);
-            }
-            model.addAttribute("shopInformationBean", list);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "page/login_page";
-        }
-        return "index";
+    @RequestMapping(path = "/editBook", method = RequestMethod.GET)
+    public String getEditBook(Model model) {
+        return "new/editBook";
     }
 
-    //进入商城
-    @RequestMapping(value = "/mall_page.do")
-    public String mallPage(HttpServletRequest request, Model model) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            userInformation = new UserInformation();
-            model.addAttribute("userInformation", userInformation);
-        } else {
-            model.addAttribute("userInformation", userInformation);
-        }
-        try {
-            List<ShopInformation> shopInformations = selectTen(1, 12);
-            List<ShopInformationBean> list = new ArrayList<>();
-            int counts = getShopCounts();
-            model.addAttribute("shopInformationCounts", counts);
-            String sortName;
-            for (ShopInformation shopInformation : shopInformations) {
-                int sort = shopInformation.getSort();
-                sortName = getSortName(sort);
-                ShopInformationBean shopInformationBean = new ShopInformationBean();
-                shopInformationBean.setId(shopInformation.getId());
-                shopInformationBean.setName(shopInformation.getName());
-                shopInformationBean.setLevel(shopInformation.getLevel());
-                shopInformationBean.setRemark(shopInformation.getRemark());
-                shopInformationBean.setPrice(shopInformation.getPrice().doubleValue());
-                shopInformationBean.setSort(sortName);
-                shopInformationBean.setQuantity(shopInformation.getQuantity());
-                shopInformationBean.setTransaction(shopInformation.getTransaction());
-                shopInformationBean.setUid(shopInformation.getUid());
-                shopInformationBean.setImage(shopInformation.getImage());
-                list.add(shopInformationBean);
-            }
-            model.addAttribute("shopInformationBean", list);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "page/login_page";
-        }
-        return "page/mall_page";
+    @RequestMapping(path = "/sellUpload", method = RequestMethod.GET)
+    public String getSellUpload(Model model) {
+        return "new/sellUpload";
     }
 
     //通过分类的第三层id获取全名

@@ -7,24 +7,28 @@ import com.wsk.pojo.*;
 import com.wsk.service.*;
 import com.wsk.token.TokenProccessor;
 import com.wsk.tool.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by wsk1103 on 2017/5/14.
  */
 @Controller
+@Slf4j
 public class GoodsController {
     @Resource
     private ShopInformationService shopInformationService;
@@ -40,6 +44,91 @@ public class GoodsController {
     private AllKindsService allKindsService;
     @Resource
     private UserWantService userWantService;
+
+    private String uploadPath = "E:\\Graduation Project\\Used-Trading-Platform2\\src\\main\\resources\\mystatic\\images\\";
+
+
+    @RequestMapping("/sellUpload")
+
+    public String sellUpload(Model model, String name, String kind, String price, String modified,
+                             String level, String remark,
+                             @RequestParam(value = "image", required = false) MultipartFile image) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("数码科技", 1);
+        map.put("影音家电", 2);
+        map.put("鞋服配饰", 3);
+        map.put("运动代步", 4);
+        map.put("书籍文具", 5);
+        map.put("其他", 6);
+
+
+        // 获取图片原始文件名
+        String originalFilename = image.getOriginalFilename();
+        // 文件名使用当前时间
+        String imageName = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+        // 获取上传图片的扩展名(jpg/png/...)
+        String extension = originalFilename.substring(originalFilename.lastIndexOf(".")).toLowerCase();
+        // 图片上传的相对路径（因为相对路径放到页面上就可以显示图片）
+        String path = imageName + extension;
+        // 图片上传的绝对路径
+        String url = uploadPath + path;
+        File dir = new File(url);
+            if (!dir.exists()) {
+                dir.mkdirs();
+        }
+
+        try{
+            // 将图片上传到本地
+            image.transferTo(new File(url));
+            ShopInformation shopInformation = new ShopInformation();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM");
+            Date date = ft.parse(modified);
+            shopInformation.setModified(date);
+            shopInformation.setPrice(BigDecimal.valueOf(Long.parseLong(price)));
+            shopInformation.setRemark(remark);
+            shopInformation.setName(name);
+            shopInformation.setKindid(map.get(kind));
+            shopInformation.setLevel(Integer.getInteger(level));
+            String headerUrl = "/image/" + path;
+            shopInformation.setImage(headerUrl);
+            shopInformationService.insertSelective(shopInformation);
+        } catch(Exception e) {
+            log.info("写入失败");
+        }
+
+
+        return "redirect:/myBookSelf";
+    }
+
+    @RequestMapping(path="/image/{fileName}",method=RequestMethod.GET)
+    public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response){
+        FileInputStream fis = null;
+        //服务器存放路径
+        fileName = uploadPath + "/" + fileName;
+        // 解析文件后缀
+        String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+        //想要图片
+        response.setContentType("image/" + suffix);
+        try {
+            fis = new FileInputStream(fileName);
+            OutputStream os = response.getOutputStream();
+            byte[] buffer = new byte[1024];
+            int b =0;
+            while((b = fis.read(buffer)) != -1){
+                os.write(buffer,0,b);
+            }
+        } catch (IOException e) {
+            log.error("读取头像失败" + e.getMessage());
+        }finally {
+            if(fis != null){
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     //进入到发布商品页面
     @RequestMapping(value = "/publish_product.do", method = RequestMethod.GET)

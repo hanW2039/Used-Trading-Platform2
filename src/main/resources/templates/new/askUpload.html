@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>上传二手书至书摊</title>
-	<link rel="stylesheet" type="text/css" href="css/reset.css">
-	<link rel="stylesheet" type="text/css" href="css/upload.css">
+	<title>上传商品至书摊</title>
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/css/upload.css}">
 </head>
 
 <body>
@@ -12,10 +12,9 @@
 	<nav class="navbar">
 		<div class="nav-menu">
 			<ul class="menu">
-				<li><a class="active" href="index.html">首页</a></li>
-				<li><a href="bookStore.html">书籍良品</a></li>
-				<li><a href="askBook.html">求书区</a></li>
-
+				<li><a th:href="@{/index}">首页</a></li>
+				<li><a th:href="@{/store}">良品区</a></li>
+				<li><a th:href="@{/askBook}">求购区</a></li>
 			</ul>
 		</div><!-- nav-menu -->
 
@@ -25,14 +24,16 @@
 		</form>
 
 		<div class="nav-info">
-			<a href="#" class="username">你的名字</a>
-			<a href="myBookself.html" class="bookshelf">||&nbsp;&nbsp;&nbsp;我的书架</a>
-			<a href="login.html" class="logout">[ 退 出 ]</a>
+			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
+			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 		</div> <!-- nav-info-end -->
 	</nav>
 	<div class="titleName">
-		<h3>上传求书信息</h3>
-		<p>设求书信息</p>
+		<h3>上传求购信息</h3>
+		<p>设置求购信息</p>
 	</div>
 
 	<div class="ask container">

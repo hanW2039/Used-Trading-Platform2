@@ -22,7 +22,7 @@ public interface UserWantService {
 
     int getCounts(int uid);
 
-    List<UserWant> selectByUid(int uid, int start);
+    List<UserWant> selectByUid(int uid);
 
     List<UserWant> selectMineByUid(int id);
 

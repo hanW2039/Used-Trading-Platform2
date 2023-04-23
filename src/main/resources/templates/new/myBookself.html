@@ -63,104 +63,33 @@
 
 	<!-- 书摊和求书选项卡 -->
 	<div class="card-btn">
-		<span title="sell-book" id="sell-btn" class="active">我的书摊</span>
-		<span title="ask-book" id="ask-btn">我的求书</span>
+		<span title="sell-book" id="sell-btn" class="active">我的小摊</span>
+		<span title="ask-book" id="ask-btn">我的求购</span>
 		<p class="upload-icon"></p>
-		<a id="sell-upload" href="#">上传书至书摊</a>
+		<a id="sell-upload" th:href="@{/sellUpload}">上传书至书摊</a>
 		<a id="ask-upload" href="#">上传求书信息</a>
-		<a id="delete-book" href="#">删除二手书</a>
+		<a id="delete-book" href="#">删除商品</a>
 	</div>
 
 	<!-- 我的书摊 -->
 	<div id="container">
 		<div id="sell-book">
 			<ul class="book-ul">
-				<li class="book-list">
+				<li class="book-list" th:each="shopInformation:${shopInformationList}">
 					<p class="book-pic">
-						<img src="img/book-list/article/1.jpg">
+						<img th:src="@{${shopInformation.image}}">
 					</p>
-					<h5 class="book-name">白夜行</h5>
+					<h5 class="book-name" th:utext="${shopInformation.name}">白夜行</h5>
 					<form>
 						<input type="text" name="book-id" class="book-id" value="2">
 					</form>
 					<span class="delete-btn"></span>
-					<a href="editBook.html"><span class="edit-btn"></span></a>
+					<a th:href="@{/editBook}"><span class="edit-btn"></span></a>
 					<div class="book-detail">
-						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price">￥52.0</span></p>
-						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price">￥12.9</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-						<p>商品描述：<span class="book-desc">有点水印,但并不影响阅读</span></p>
-					</div>
-				</li>
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</p>
-					<h5 class="book-name">白夜行</h5>
-					<form>
-						<input type="text" name="book-id" class="book-id" value="3">
-					</form>
-					<span class="delete-btn"></span>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price">￥52.0</span></p>
-						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price">￥12.9</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-						<p>商品描述：<span class="book-desc">有点水印,但并不影响阅读</span></p>
-					</div>
-				</li>
-
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</p>
-					<h5 class="book-name">白夜行</h5>
-					<form>
-						<input type="text" name="book-id" class="book-id" value="4">
-					</form>
-					<span class="delete-btn"></span>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price">￥52.0</span></p>
-						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price">￥12.9</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-						<p>商品描述：<span class="book-desc">有点水印,但并不影响阅读</span></p>
-					</div>
-				</li>
-
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</p>
-					<h5 class="book-name">白夜行</h5>
-					<form>
-						<input type="text" name="book-id" class="book-id" value="5">
-					</form>
-					<span class="delete-btn"></span>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price">￥52.0</span></p>
-						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price">￥12.9</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-						<p>商品描述：<span class="book-desc">有点水印,但并不影响阅读</span></p>
-					</div>
-				</li>
-
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/1.jpg">
-					</p>
-					<h5 class="book-name">白夜行</h5>
-					<form>
-						<input type="text" name="book-id" class="book-id" value="1">
-					</form>
-					<span class="delete-btn"></span>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price">￥52.0</span></p>
-						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price">￥12.9</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-						<p>商品描述：<span class="book-desc">有点水印,但并不影响阅读</span></p>
+<!--						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price" th:text="${shopInformation.price}">￥52.0</span></p>-->
+						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price" th:text="${shopInformation.price}">￥12.9</span></p>
+						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition" ><a th:text="${shopInformation.level}"></a>成新</span></p>
+						<p>商品描述：<span class="book-desc" th:text="${shopInformation.remark}">有点水印,但并不影响阅读</span></p>
 					</div>
 				</li>
 			</ul>
@@ -169,64 +98,16 @@
 		<!-- 我的求书 -->
 		<div id="ask-book">
 			<ul class="book-ul">
-				<li class="book-list">
+				<li class="book-list" th:each="userWant:${userWantList}">
 					<p class="book-pic">
-						<img src="img/book-list/article/2.jpg">
+						<img th:src="@{${userWant.image}}">
 					</p>
-					<h5 class="book-name">简爱</h5>
-					<span class="edit-btn"></span>
+					<h5 class="book-name" th:text="${userWant.name}">简爱</h5>
+					<span class="edit-btn"><a th:href="@{/editBook}"></a></span>
 					<div class="book-detail">
-						<p>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<span class="book-author">夏洛特·勃朗特</span></p>
-						<p>出&nbsp; 版&nbsp;社：<span class="book-press">世界图书出版公司</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-					</div>
-				</li>
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/2.jpg">
-					</p>
-					<h5 class="book-name">简爱</h5>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<span class="book-author">夏洛特·勃朗特</span></p>
-						<p>出&nbsp; 版&nbsp;社：<span class="book-press">世界图书出版公司</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-					</div>
-				</li>
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/2.jpg">
-					</p>
-					<h5 class="book-name">简爱</h5>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<span class="book-author">夏洛特·勃朗特</span></p>
-						<p>出&nbsp; 版&nbsp;社：<span class="book-press">世界图书出版公司</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-					</div>
-				</li>
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/2.jpg">
-					</p>
-					<h5 class="book-name">简爱</h5>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<span class="book-author">夏洛特·勃朗特</span></p>
-						<p>出&nbsp; 版&nbsp;社：<span class="book-press">世界图书出版公司</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
-					</div>
-				</li>
-				<li class="book-list">
-					<p class="book-pic">
-						<img src="img/book-list/article/2.jpg">
-					</p>
-					<h5 class="book-name">简爱</h5>
-					<span class="edit-btn"></span>
-					<div class="book-detail">
-						<p>作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<span class="book-author">夏洛特·勃朗特</span></p>
-						<p>出&nbsp; 版&nbsp;社：<span class="book-press">世界图书出版公司</span></p>
-						<p>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相：<span class="book-condition">八五品</span></p>
+						<p>描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述：<span class="book-author" th:text="${userWant.remark}">夏洛特·勃朗特</span></p>
+						<p>求&nbsp; 购&nbsp;价：<span class="book-press" th:text="${userWant.price}">世界图书出版公司</span></p>
+						<p>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：<span class="book-condition" th:text="${userWant.quantity}">八五品</span></p>
 					</div>
 				</li>
 			</ul>

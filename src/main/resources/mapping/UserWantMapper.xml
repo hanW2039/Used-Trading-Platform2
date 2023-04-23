@@ -18,7 +18,7 @@
     </sql>
     
     <sql id="all">
-        id, modified, display, name, sort, quantity, price, remark, uid
+        id, modified, display, name, sort, quantity, price, remark, uid,image
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -41,10 +41,9 @@
     <select id="selectByUid" resultMap="BaseResultMap">
         select
         <include refid="all"/>
-        from
-        userwant
+        from userwant
         where uid = #{0} and display = 1
-        limit #{1},10
+        limit 1,18
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

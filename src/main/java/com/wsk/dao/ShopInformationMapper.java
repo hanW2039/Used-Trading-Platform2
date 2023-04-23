@@ -41,8 +41,13 @@ public interface ShopInformationMapper {
     List<ShopInformation> selectByQueryDTO(QueryDTO queryDTO);
 
     List<ShopInformation> selectByKindid(Integer Id);
-    //选择用户的发布
-    @Select("select * from shopinformation where uid=#{uid} and display=1 order by id desc limit 12")
+
+    /**
+     * 选择用户的发布商品
+     * @param uid
+     * @return
+     */
+    @Select("select * from shopinformation where uid=#{uid} and display=1 order by id desc limit 18")
     List<ShopInformation> selectUserReleaseByUid(int uid);
 
     /**

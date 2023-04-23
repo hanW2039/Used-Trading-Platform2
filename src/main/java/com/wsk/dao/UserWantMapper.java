@@ -20,7 +20,12 @@ public interface UserWantMapper {
 
     int getCounts(int uid);
 
-    List<UserWant> selectByUid(int uid, int start);
+    /**
+     * 我的求购
+     * @param uid
+     * @return
+     */
+    List<UserWant> selectByUid(int uid);
 
     @Select("select * from userwant where uid=#{id} and display=1 order by id desc limit 12")
     List<UserWant> selectMineByUid(int id);
