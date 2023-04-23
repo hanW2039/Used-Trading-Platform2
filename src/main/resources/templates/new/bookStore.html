@@ -58,7 +58,8 @@
 					<a class="book-pic">
 						<img th:src="${shop.image}">
 					</a>
-					<a th:href="@{/detail/id(id=${shop.id})}" class="book-info">
+					<a th:href="@{/detail/(id=${shop.id})}" class="book-info">
+<!--						<input type="hidden" name="id" th:value="${shop.id}">-->
 						<h5 class="book-name" th:text="${shop.name}">白夜行</h5>
 						<span class="book-detail" th:text="${shop.remark}">东野圭吾 著 / 南海出版公司 / 2008-09 / 平装</span>
 					</a>

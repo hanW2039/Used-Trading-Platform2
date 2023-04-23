@@ -41,7 +41,7 @@ public interface ShopInformationMapper {
     List<ShopInformation> selectByQueryDTO(QueryDTO queryDTO);
 
     List<ShopInformation> selectByKindid(Integer Id);
-
+    List<ShopInformation> selectByKindidT(Integer Id);
     /**
      * 选择用户的发布商品
      * @param uid

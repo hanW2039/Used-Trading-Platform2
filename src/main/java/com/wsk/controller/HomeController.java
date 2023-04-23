@@ -1,6 +1,7 @@
 package com.wsk.controller;
 
 import com.wsk.bean.ShopInformationBean;
+import com.wsk.dao.ShopInformationMapper;
 import com.wsk.pojo.*;
 import com.wsk.service.*;
 import com.wsk.tool.StringUtils;
@@ -12,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * wh
@@ -38,6 +37,8 @@ public class HomeController {
     private HostHolder hostHolder;
     @Autowired
     private UserWantService userWantService;
+    @Resource
+    private ShopInformationMapper shopInformationMapper;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model){
@@ -47,12 +48,29 @@ public class HomeController {
         for(AllKinds kind : allKinds) {
             ShopInformationVO shopInformationVO = new ShopInformationVO(shopInformationService.selectByKindid(kind.getId()),
                     kind.getName(),
-                    kind.getName().substring(1));
+                    kind.getName().substring(1),
+                    kind.getId().toString());
             shopList.add(shopInformationVO);
         }
         model.addAttribute("shopList", shopList);
         model.addAttribute("allKinds", allKinds);
         return "new/index";
+    }
+
+    @RequestMapping(path = "/indexMore", method = RequestMethod.GET)
+    public String getIndexMorePage(Model model, String id){
+        List<AllKinds> allKinds = allKindsService.selectAll();
+        String name = null;
+        for(AllKinds a : allKinds) {
+            if(a.getId().toString().equals(id)) {
+                name = a.getName();
+            }
+        }
+        List<ShopInformation> shopInformationList = shopInformationMapper.selectByKindidT(Integer.valueOf(id));
+        model.addAttribute("shopInformationList",shopInformationList);
+        model.addAttribute("allKinds", allKinds);
+        model.addAttribute("kind", name);
+        return "new/indexmore";
     }
 
     @RequestMapping(path = "/store", method = RequestMethod.GET)
@@ -69,15 +87,18 @@ public class HomeController {
         return "new/bookStore";
     }
 
-    @RequestMapping(path = "/detail/{id}", method = RequestMethod.GET)
-    public String getBookDetail(Model model, @PathVariable("id") String id) {
-        ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(Integer.getInteger(id));
+    @RequestMapping(path = "/detail", method = RequestMethod.GET)
+    public String getBookDetail(Model model, String id) {
+        ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(Integer.valueOf(id));
+        UserInformation userInformation = userInformationService.selectByPrimaryKey(shopInformation.getUid());
+        model.addAttribute("userInformation",userInformation);
         model.addAttribute("shopInformation", shopInformation);
         return "new/bookDetail";
     }
     @RequestMapping(path = "/askBook", method = RequestMethod.GET)
     public String getAskBook(Model model) {
-
+        List<UserWant> userWants = userWantService.selectAll();
+        model.addAttribute("userWants", userWants);
         return "new/askBook";
     }
 

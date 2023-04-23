@@ -39,14 +39,14 @@
 			<h3 class="book-title"><a href="#">| 所有求书信息</a></h3>
 
 			<ul class="book-lists">
-				<li class="book-list">
+				<li class="book-list" th:each="userWant:${userWants}">
 					<a href="#" class="book-pic">
-						<img src="img/book-list/article/1.jpg">
+						<img th:src="@{${userWant.image}}">
 					</a>
 					<a href="#" class="book-info askbook-info">
-						<h5 class="book-name">白夜行</h5>
-						<span class="book-auto">东野圭吾 著 </span>
-						<span class="book-press">南海出版公司 / 2008-09 / 平装</span>
+						<h5 class="book-name" th:text="${userWant.name}">白夜行</h5>
+						<span class="book-auto" th:text="${userWant.remark}">东野圭吾 著 </span>
+						<span class="book-press" th:text="${userWant.remark}">南海出版公司 / 2008-09 / 平装</span>
 					</a>
 					<a href="#" class="book-contact">立即联系求书者</a>
 				</li>

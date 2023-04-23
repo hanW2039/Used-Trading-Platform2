@@ -32,34 +32,34 @@
 		</ul>
 	</header>
 
-	<!-- 轮播 -->
-	<div class="carousel">
-		<div class="book-guide">
-			<h4>商品导航</h4>
-			<ul class="book-class" th:each="list:${allKinds}">
-				<li><a th:href="${list.link}" title="article" th:utext="${list.name}">小说 / 文学 / 语言文字</a></li>
-			</ul>
-		</div><!-- book-guide -->
-		<div class="slider">
-			<div class="slider-img">
-				<ul class="slider-img-ul">
-					<li><img th:src="@{/img/carousel/5.jpg}"></li>
-					<li><img th:src="@{/img/carousel/4.jpg}"></li>
-					<li><img th:src="@{/img/carousel/3.jpg}"></li>
-					<li><img th:src="@{/img/carousel/2.jpg}"></li>
-					<li><img th:src="@{/img/carousel/1.jpg}"></li>
-				</ul>
-			</div>
-		</div><!-- 	slider -->
-	</div><!-- carousel -->
+<!--	&lt;!&ndash; 轮播 &ndash;&gt;-->
+<!--	<div class="carousel">-->
+<!--		<div class="book-guide">-->
+<!--			<h4>商品导航</h4>-->
+<!--			<ul class="book-class" th:each="list:${allKinds}">-->
+<!--				<li><a th:href="${list.link}" title="article" th:utext="${list.name}">小说 / 文学 / 语言文字</a></li>-->
+<!--			</ul>-->
+<!--		</div>&lt;!&ndash; book-guide &ndash;&gt;-->
+<!--		<div class="slider">-->
+<!--			<div class="slider-img">-->
+<!--				<ul class="slider-img-ul">-->
+<!--					<li><img th:src="@{/img/carousel/5.jpg}"></li>-->
+<!--					<li><img th:src="@{/img/carousel/4.jpg}"></li>-->
+<!--					<li><img th:src="@{/img/carousel/3.jpg}"></li>-->
+<!--					<li><img th:src="@{/img/carousel/2.jpg}"></li>-->
+<!--					<li><img th:src="@{/img/carousel/1.jpg}"></li>-->
+<!--				</ul>-->
+<!--			</div>-->
+<!--		</div>&lt;!&ndash; 	slider &ndash;&gt;-->
+<!--	</div>&lt;!&ndash; carousel &ndash;&gt;-->
 
 	<!-- 图书分类 -->
 	<div id="container">
-		<div class="book-part" th:id="${state.index}" th:each="showInformationVO, state:${shopList}">
-			<h3 class="book-title">| <a href="#" th:utext="${showInformationVO.name}">小说 / 文学 / 语言文字</a></h3>
-			<a class="more" th:href="@{/indexMore/(id=${showInformationVO.kindid})}"> > > 更多</a>
+		<div class="book-part">
+			<h3 class="book-title">| <a href="#" th:utext="${kind}">小说 / 文学 / 语言文字</a></h3>
+<!--			<a class="more" href="#"> > > 更多</a>-->
 			<ul class="book-lists">
-				<li class="book-list"  th:each="shop : ${showInformationVO.shopInformationList}">
+				<li class="book-list"  th:each="shop : ${shopInformationList}">
 					<a href="bookDetail.html" class="book-pic">
 						<img th:src="@{${shop.image}}">
 					</a>

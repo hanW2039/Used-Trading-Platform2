@@ -1,7 +1,6 @@
 #server:
 #  servlet:
 #    context-path: /trading
-
 server:
   port: 8888
 spring:
@@ -38,6 +37,8 @@ spring:
           starttls:
             enable: false
             required: false
+
+
 #  mvc:
 #    static-path-pattern: classpath:/resources/static/**
 #  resources:

@@ -26,4 +26,5 @@ public class ShopInformationVO {
      * 被链接名
      */
     private String linked;
+    private String kindid;
 }

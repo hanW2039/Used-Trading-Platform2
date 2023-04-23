@@ -265,6 +265,13 @@
     limit 1 , 5
   </select>
 
+  <select id="selectByKindidT" resultType="com.wsk.pojo.ShopInformation" >
+    select
+    <include refid="all" />
+    FROM <include refid="table"/>
+    where kindid = #{kindid}
+  </select>
+
   <select id="selectByPage" resultType="com.wsk.pojo.ShopInformation">
     select <include refid="all" />
     from <include refid="table"/>

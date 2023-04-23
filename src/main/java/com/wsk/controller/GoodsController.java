@@ -7,7 +7,9 @@ import com.wsk.pojo.*;
 import com.wsk.service.*;
 import com.wsk.token.TokenProccessor;
 import com.wsk.tool.StringUtils;
+import com.wsk.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +47,8 @@ public class GoodsController {
     @Resource
     private UserWantService userWantService;
 
+    @Autowired
+    private HostHolder hostHolder;
     private String uploadPath = "E:\\Graduation Project\\Used-Trading-Platform2\\src\\main\\resources\\mystatic\\images\\";
 
 
@@ -89,6 +93,7 @@ public class GoodsController {
             shopInformation.setName(name);
             shopInformation.setKindid(map.get(kind));
             shopInformation.setLevel(Integer.getInteger(level));
+            shopInformation.setUid(hostHolder.getUser().getId());
             String headerUrl = "/image/" + path;
             shopInformation.setImage(headerUrl);
             shopInformationService.insertSelective(shopInformation);
