@@ -168,6 +168,11 @@ public class HomeController {
         return "new/updateuserinformation";
     }
 
+//    @RequestMapping(path = "/car")
+//    public String getCar() {
+//
+//    }
+
     //获得分类中的第一层
     @RequestMapping(value = "/getAllKinds.do")
     @ResponseBody

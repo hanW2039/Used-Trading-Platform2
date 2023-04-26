@@ -397,17 +397,10 @@ public class UserController {
     }
 
     //check the shopping cart,查看购物车
-    @RequestMapping(value = "/shopping_cart.do")
-    public String selectShopCar(HttpServletRequest request, Model model) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            userInformation = new UserInformation();
-            model.addAttribute("userInformation", userInformation);
-//            list.add(shopCar);
-            return "redirect:/login.do";
-        } else {
-            model.addAttribute("userInformation", userInformation);
-        }
+    @RequestMapping(value = "/shopping_cart")
+    public String selectShopCar(Model model) {
+        UserInformation userInformation = hostHolder.getUser();
+        model.addAttribute("userInformation", userInformation);
         int uid = userInformation.getId();
         List<GoodsCar> goodsCars = goodsCarService.selectByUid(uid);
         List<GoodsCarBean> goodsCarBeans = new ArrayList<>();
@@ -427,7 +420,7 @@ public class UserController {
             goodsCarBeans.add(goodsCarBean);
         }
         model.addAttribute("list", goodsCarBeans);
-        return "page/shopping_cart";
+        return "new/car";
     }
 
 //    //通过购物车的id获取购物车里面的商品
