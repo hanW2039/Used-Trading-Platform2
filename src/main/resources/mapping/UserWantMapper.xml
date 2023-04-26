@@ -18,7 +18,7 @@
     </sql>
     
     <sql id="all">
-        id, modified, display, name, sort, quantity, price, remark, uid,image
+        id, modified, display, name, sort, quantity, price, remark, uid,image,kindid
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -42,8 +42,7 @@
         select
         <include refid="all"/>
         from userwant
-        where uid = #{0} and display = 1
-        limit 1,18
+        where uid = #{uid} and display = 1
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
@@ -92,6 +91,12 @@
             <if test="uid != null">
                 uid,
             </if>
+            <if test="kindid != null">
+                kindid,
+            </if>
+            <if test="image != null">
+                image,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -121,6 +126,12 @@
             <if test="uid != null">
                 #{uid,jdbcType=INTEGER},
             </if>
+            <if test="kindid != null">
+                #{kindid,jdbcType=INTEGER},
+            </if>
+            <if test="image != null">
+                #{image},
+            </if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.wsk.pojo.UserWant">
@@ -149,6 +160,12 @@
             </if>
             <if test="uid != null">
                 uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="image != null">
+                image = #{image},
+            </if>
+            <if test="kindid != null">
+                kindid = #{kindid},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

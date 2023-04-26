@@ -26,4 +26,6 @@ public class UserWant implements Serializable {
     private String remark;
 
     private String image;
+
+    private Integer kindid;
 }

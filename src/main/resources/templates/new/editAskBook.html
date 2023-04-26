@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>乐淘淘-编辑书本信息</title>
+	<title>乐淘淘-编辑求购信息</title>
 	<link rel="stylesheet" th:href="@{/css/reset.css}">
 	<link rel="stylesheet" th:href="@{/css/upload.css}">
 </head>
@@ -36,10 +36,10 @@
 	</div>
 
 	<div class="container">
-		<form class="upload-form" th:action="@{/update}" method="post" enctype="multipart/form-data">
+		<form class="upload-form" th:action="@{/updateAsk}" method="post" enctype="multipart/form-data">
 			<p>
 				<span class="pic-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				修改图片： <input type="file" name="image" id="book-file">
+				修改 图片： <input type="file" name="image" id="book-file">
 <!--				<img id="book-pic" src="img/loadPic.png">-->
 			</p>
 			<p>
@@ -60,16 +60,16 @@
 
 			</p>
 			<p>
-				<span class="price-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;售&nbsp;价：<input type="text" name="price">
-			</p>
-			<p>
 				<span class="time-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				购&nbsp;买&nbsp;&nbsp;时&nbsp;间：<input type="month" name="modified">
+				求&nbsp;购&nbsp;&nbsp;时&nbsp;间：<input type="month" name="modified">
 			</p>
 			<p>
-				<span class="condition-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;品&nbsp;相：<input type="text" name="level">
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				求&nbsp;&nbsp;&nbsp;购&nbsp;&nbsp;&nbsp;价：<input type="text" name="price">
+			</p>
+			<p>
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：<input type="text" name="quantity">
 			</p>
 			<p>
 				<span class="desc-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

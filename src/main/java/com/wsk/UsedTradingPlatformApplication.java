@@ -4,9 +4,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author sk
@@ -23,5 +25,8 @@ public class UsedTradingPlatformApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(UsedTradingPlatformApplication.class).run(args);
     }
-
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
 }

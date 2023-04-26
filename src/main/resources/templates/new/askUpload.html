@@ -1,65 +1,179 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--	<title>乐淘淘-上传求购信息</title>-->
+<!--	<link rel="stylesheet" th:href="@{/css/reset.css}">-->
+<!--	<link rel="stylesheet" th:href="@{/css/upload.css}">-->
+<!--</head>-->
+
+<!--<body>-->
+<!--	&lt;!&ndash; 导航条 &ndash;&gt;-->
+<!--	<nav class="navbar">-->
+<!--		<div class="nav-menu">-->
+<!--			<ul class="menu">-->
+<!--				<li><a th:href="@{/index}">首页</a></li>-->
+<!--				<li><a th:href="@{/store}">良品区</a></li>-->
+<!--				<li><a th:href="@{/askBook}">求购区</a></li>-->
+<!--			</ul>-->
+<!--		</div>&lt;!&ndash; nav-menu &ndash;&gt;-->
+
+<!--		<form class="nav-search">-->
+<!--			<input type="search" class="searchIn" placeholder="搜图书...">-->
+<!--			<button class="search-logo"><img src="img/search2.png"></button>-->
+<!--		</form>-->
+
+<!--		<div class="nav-info">-->
+<!--			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>-->
+<!--			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>-->
+<!--			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>-->
+<!--			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>-->
+<!--			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>-->
+<!--		</div> &lt;!&ndash; nav-info-end &ndash;&gt;-->
+<!--	</nav>-->
+<!--	<div class="titleName">-->
+<!--		<h3>上传求购信息</h3>-->
+<!--		<p>设置求购信息</p>-->
+<!--	</div>-->
+
+<!--	<div class="ask container">-->
+<!--		<form th:action="@{/askUpload}" method="post">-->
+<!--			<p>-->
+<!--				<span class="pic-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--				上传图片： <input type="file" name="image">-->
+<!--			</p>-->
+<!--			<p>-->
+<!--				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--				商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;品&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" name="name">-->
+<!--			</p>-->
+<!--			<p>-->
+<!--				<span class="author-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--				商&nbsp;品&nbsp;&nbsp;描&nbsp;述：<input type="text" name="remark">-->
+<!--			</p>-->
+<!--			<p>-->
+<!--				<span class="author-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--				商&nbsp;品&nbsp;&nbsp;种&nbsp;类：<input type="text" list="appNamelist" name="kind">-->
+<!--				<datalist id="appNamelist">-->
+<!--					<option>数码科技</option>-->
+<!--					<option>影音家电</option>-->
+<!--					<option>鞋服配饰</option>-->
+<!--					<option>运动代步</option>-->
+<!--					<option>书籍文具</option>-->
+<!--					<option>其他</option>-->
+<!--				</datalist>-->
+<!--			</p>-->
+<!--			<input type="submit" class="submit-btn" name="book-submit">-->
+<!--		</form>-->
+<!--	</div>-->
+<!--	<footer>-->
+<!--		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>-->
+<!--	</footer>-->
+<!--</body>-->
+
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>上传商品至书摊</title>
+	<title>乐淘淘-上传求购信息</title>
 	<link rel="stylesheet" th:href="@{/css/reset.css}">
 	<link rel="stylesheet" th:href="@{/css/upload.css}">
 </head>
 
 <body>
-	<!-- 导航条 -->
-	<nav class="navbar">
-		<div class="nav-menu">
-			<ul class="menu">
-				<li><a th:href="@{/index}">首页</a></li>
-				<li><a th:href="@{/store}">良品区</a></li>
-				<li><a th:href="@{/askBook}">求购区</a></li>
-			</ul>
-		</div><!-- nav-menu -->
+<!-- 导航条 -->
+<nav class="navbar">
+	<div class="nav-menu">
+		<ul class="menu">
+			<li><a class="active" th:href="@{/index}">首页</a></li>
+			<li><a th:href="@{/store}">良品区</a></li>
+			<li><a th:href="@{/askBook}">求购区</a></li>
+		</ul>
+	</div><!-- nav-menu -->
 
-		<form class="nav-search">
-			<input type="search" class="searchIn" placeholder="搜图书...">
-			<button class="search-logo"><img src="img/search2.png"></button>
-		</form>
+	<form class="nav-search">
+		<input type="search" class="searchIn" placeholder="搜图书...">
+		<button class="search-logo"><img src="img/search2.png"></button>
+	</form>
 
-		<div class="nav-info">
-			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
-			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
-			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
-			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
-			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
-		</div> <!-- nav-info-end -->
-	</nav>
+	<div class="nav-info">
+		<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+		<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
+		<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+		<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+		<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
+	</div> <!-- nav-info-end -->
+</nav>
 	<div class="titleName">
 		<h3>上传求购信息</h3>
 		<p>设置求购信息</p>
 	</div>
 
-	<div class="ask container">
-		<form>
+	<div class="container">
+		<form class="upload-form" th:action="@{/askUpload}" method="post" enctype="multipart/form-data">
 			<p>
 				<span class="pic-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				上传书图片： <input type="file" name="book-pic">
+				上传图片： <input type="file" name="image">
 			</p>
 			<p>
 				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				书&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" name="book-name">
+				商&nbsp;&nbsp;&nbsp;品&nbsp;&nbsp;&nbsp;名：<input type="text" name="name">
 			</p>
 			<p>
 				<span class="author-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;者：<input type="text" name="book-author">
+				商&nbsp;品&nbsp;&nbsp;种&nbsp;类：<input type="text" list="appNamelist" name="kind">
+				<datalist id="appNamelist">
+					<option>数码科技</option>
+					<option>影音家电</option>
+					<option>鞋服配饰</option>
+					<option>运动代步</option>
+					<option>书籍文具</option>
+					<option>其他</option>
+				</datalist>
+
 			</p>
+			<!--			<p>-->
+			<!--				<span class="orign-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+			<!--				商&nbsp;品&nbsp;&nbsp;原&nbsp;价：<input type="text" name="book-orign">-->
+			<!--			</p>-->
+<!--			<p>-->
+<!--				<span class="price-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+<!--				商&nbsp;品&nbsp;&nbsp;售&nbsp;价：<input type="text" name="price">-->
+<!--			</p>-->
+			<!--			<p>-->
+			<!--				<span class="press-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>-->
+			<!--				出&nbsp;&nbsp;&nbsp;&nbsp;版&nbsp;&nbsp;&nbsp;社：<input type="text" name="book-press">-->
+			<!--			</p>-->
 			<p>
-				<span class="press-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				出&nbsp;&nbsp;&nbsp;&nbsp;版&nbsp;&nbsp;&nbsp;社：<input type="text" name="book-press">
+				<span class="time-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				求&nbsp;购&nbsp;&nbsp;时&nbsp;间：<input type="month" name="modified">
+			</p>
+
+			<p>
+				<span class="desc-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				商&nbsp;品&nbsp;&nbsp;描&nbsp;述：<input type="text" name="remark">
 			</p>
 			<input type="submit" class="submit-btn" name="book-submit">
 		</form>
 	</div>
+
+	<!-- 模态窗口 -->
+	<div id="modal">
+		<dialog id="modal-dialog">
+			提交成功！
+			<img class="modal-close-icon" th:src="@{/img/close.png}">
+			<div class="modal-close">
+				<img th:src="@{/img/success.png}">
+			</div>
+		</dialog>
+	</div>
 	<footer>
 		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>
 	</footer>
+	<script type="text/javascript" th:src="@{/js/jquery-3.2.js}"></script>
 </body>
 
 </html>

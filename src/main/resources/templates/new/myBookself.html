@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>我的小摊</title>
+	<title>乐淘淘-我的小摊</title>
 	<link rel="stylesheet" th:href="@{/css/reset.css}">
 	<link rel="stylesheet" th:href="@{/css/myBookshelf.css}">
 </head>
@@ -67,8 +67,8 @@
 		<span title="ask-book" id="ask-btn">我的求购</span>
 		<p class="upload-icon"></p>
 		<a id="sell-upload" th:href="@{/sellUpload}">上传书至书摊</a>
-		<a id="ask-upload" href="#">上传求书信息</a>
-		<a id="delete-book" href="#">删除商品</a>
+		<a id="ask-upload" th:href="@{/askUpload}">上传求书信息</a>
+<!--		<a id="delete-book" href="#delete-btn">删除商品</a>-->
 	</div>
 
 	<!-- 我的书摊 -->
@@ -81,10 +81,10 @@
 					</p>
 					<h5 class="book-name" th:utext="${shopInformation.name}">白夜行</h5>
 					<form>
-						<input type="text" name="book-id" class="book-id" value="2">
+						<input type="text" name="book-id" class="book-id" th:value="${shopInformation.id}">
 					</form>
-					<span class="delete-btn"></span>
-					<a th:href="@{/editBook}"><span class="edit-btn"></span></a>
+					<span class="delete-btn" th:href="@{/delete}"></span>
+					<a th:href="@{/editBook/(id=${shopInformation.id})}"><span class="edit-btn"></span></a>
 					<div class="book-detail">
 <!--						<p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="original-price" th:text="${shopInformation.price}">￥52.0</span></p>-->
 						<p>售&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：<span class="book-price" th:text="${shopInformation.price}">￥12.9</span></p>
@@ -103,10 +103,10 @@
 						<img th:src="@{${userWant.image}}">
 					</p>
 					<h5 class="book-name" th:text="${userWant.name}">简爱</h5>
-					<span class="edit-btn"><a th:href="@{/editBook}"></a></span>
+					<a th:href="@{/editAskBook/(id=${userWant.id})}"><span class="edit-btn"></span></a>
 					<div class="book-detail">
 						<p>描&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述：<span class="book-author" th:text="${userWant.remark}">夏洛特·勃朗特</span></p>
-						<p>求&nbsp; 购&nbsp;价：<span class="book-press" th:text="${userWant.price}">世界图书出版公司</span></p>
+						<p>求&nbsp; 购 &nbsp;价：<span class="book-press" th:text="${userWant.price}">世界图书出版公司</span></p>
 						<p>数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：<span class="book-condition" th:text="${userWant.quantity}">八五品</span></p>
 					</div>
 				</li>

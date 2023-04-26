@@ -37,7 +37,9 @@ spring:
           starttls:
             enable: false
             required: false
-
+#  cloud:
+#    nacos:
+#      server-addr: localhost:8848 # nacos 服务端地址
 
 #  mvc:
 #    static-path-pattern: classpath:/resources/static/**
@@ -61,4 +63,6 @@ logging:
 #    rollingpolicy:
 #      max-history: 60
 #  path: ./logs
+
+
 

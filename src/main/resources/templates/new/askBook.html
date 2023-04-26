@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>求购区</title>
+	<title>乐淘淘-求购区</title>
 	<link rel="stylesheet" th:href="@{/css/book.css}">
 </head>
 
@@ -11,7 +11,7 @@
 	<header>
 		<nav class="navbar">
 			<div class="nav-info">
-				<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+				<a class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
 				<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
 				<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
 				<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
@@ -21,7 +21,7 @@
 				<a href="index.html"><img class="logo" th:src="@{/img/logo2.png}"></a>
 				<div class="search-form">
 					<input type="search" class="searchIn" placeholder="搜图书...">
-					<a href="#" class="search-logo">| &nbsp;<img src="img/search.png"></a>
+					<a href="#" class="search-logo">| &nbsp;<img th:src="@{/img/search.png}"></a>
 					<button class="searchBtn"><a href="#">搜索</a></button>
 				</div>
 			</div><!--  nav-search -->
@@ -36,7 +36,7 @@
 	<!-- 图书分类 -->
 	<div id="container">
 		<div id="book-container">
-			<h3 class="book-title"><a href="#">| 所有求书信息</a></h3>
+			<h3 class="book-title"><a href="#">| 所有求购信息</a></h3>
 
 			<ul class="book-lists">
 				<li class="book-list" th:each="userWant:${userWants}">
@@ -48,17 +48,24 @@
 						<span class="book-auto" th:text="${userWant.remark}">东野圭吾 著 </span>
 						<span class="book-press" th:text="${userWant.remark}">南海出版公司 / 2008-09 / 平装</span>
 					</a>
-					<a href="#" class="book-contact">立即联系求书者</a>
+					<a href="#" class="book-contact">立即联系求购者</a>
 				</li>
 			</ul><!--  book-list end -->
 		</div> <!-- book-container end-->
 
-		<span class="page-btn">
-			<a href="#" class="page-top">首页</a>
-			<a href="#" class="page-pre">上一页</a>
-			<a href="#" class="page-next">下一页</a>
-			<a href="#" class="page-end">尾页</a>
-		</span>
+<!--		<span class="page-btn">-->
+<!--			<a href="#" class="page-top">首页</a>-->
+<!--			<a href="#" class="page-pre">上一页</a>-->
+<!--			<a href="#" class="page-next">下一页</a>-->
+<!--			<a href="#" class="page-end">尾页</a>-->
+<!--		</span>-->
+<!--		<span class="page-btn"  th:if="${page.rows>0}" th:fragment="pagination">-->
+
+<!--			<a class="page-top" th:href="@{${page.path}(current=1)}">首页</a>-->
+<!--			<a class="page-pre" th:href="@{${page.path}(current=${(page.current)-1})}">上一页</a>-->
+<!--			<a class="page-pre" th:href="@{${page.path}(current=${(page.current)+1})}">下一页</a>-->
+<!--			<a class="page-end" th:href="@{${page.path}(current=${page.total})}">尾页</a>-->
+<!--		</span>-->
 	</div><!-- container end-->
 
 	<!-- 脚本 -->

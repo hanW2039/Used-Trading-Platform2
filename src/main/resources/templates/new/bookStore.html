@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>良品区</title>
+	<title>乐淘淘-良品区</title>
 	<link rel="stylesheet" th:href="@{/css/book.css}">
 </head>
 
 <body>
 	<!-- 导航 -->
-	<header >
+	<header>
 		<nav class="navbar">
 			<div class="nav-info">
 				<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
@@ -69,16 +69,15 @@
 				</li>
 			</ul><!--  book-list end -->
 		</div> <!-- book-container end-->
-		<span class="page-btn">
-			<a href="#" class="page-top">首页</a>
-			<a href="#" class="page-pre">上一页</a>
-			<a href="#" class="page-next">下一页</a>
-			<a href="#" class="page-end">尾页</a>
+		<span class="page-btn"  th:if="${page.rows>0}" th:fragment="pagination">
+
+			<a class="page-top" th:href="@{${page.path}(current=1)}">首页</a>
+			<a class="page-pre" th:href="@{${page.path}(current=${(page.current)-1})}">上一页</a>
+			<a class="page-pre" th:href="@{${page.path}(current=${(page.current)+1})}">下一页</a>
+			<a class="page-end" th:href="@{${page.path}(current=${page.total})}">尾页</a>
 		</span>
 	</div><!-- container end-->
-	<footer>
-		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>
-	</footer>
+
 	<script type="text/javascript" th:src="@{/js/jquery-3.2.js}"></script>
 	<script type="text/javascript">
 		$(function () {

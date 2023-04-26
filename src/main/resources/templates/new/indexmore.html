@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>乐淘淘</title>
+	<title>乐淘淘-首页</title>
 	<link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
@@ -60,7 +60,7 @@
 <!--			<a class="more" href="#"> > > 更多</a>-->
 			<ul class="book-lists">
 				<li class="book-list"  th:each="shop : ${shopInformationList}">
-					<a href="bookDetail.html" class="book-pic">
+					<a th:href="@{/detail/(id=${shop.id})}" class="book-pic">
 						<img th:src="@{${shop.image}}">
 					</a>
 					<a th:href="@{/detail/(id=${shop.id})}" class="book-info">

@@ -75,6 +75,12 @@ public class HomeController {
 
     @RequestMapping(path = "/store", method = RequestMethod.GET)
     public String getBookStore(Model model, Page page) {
+        if(page.getCurrent() < 1) {
+            page.setCurrent(1);
+        }
+        if(page.getCurrent() > page.getTotal()) {
+            page.setCurrent(page.getTotal());
+        }
         List<AllKinds> allKinds = allKindsService.selectAll();
         page.setRows(shopInformationService.getCounts());
         page.setPath("/store");
@@ -96,7 +102,7 @@ public class HomeController {
         return "new/bookDetail";
     }
     @RequestMapping(path = "/askBook", method = RequestMethod.GET)
-    public String getAskBook(Model model) {
+    public String getAskBook(Model model, Page page) {
         List<UserWant> userWants = userWantService.selectAll();
         model.addAttribute("userWants", userWants);
         return "new/askBook";
@@ -114,13 +120,29 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/editBook", method = RequestMethod.GET)
-    public String getEditBook(Model model) {
+    public String getEditBook(Model model, Integer id) {
+        if(id != null) {
+            model.addAttribute("id",id);
+        }
         return "new/editBook";
+    }
+
+    @RequestMapping(path = "/editAskBook", method = RequestMethod.GET)
+    public String getEditAskBook(Model model, Integer id) {
+        if(id != null) {
+            model.addAttribute("id",id);
+        }
+        return "new/editAskBook";
     }
 
     @RequestMapping(path = "/sellUpload", method = RequestMethod.GET)
     public String getSellUpload(Model model) {
         return "new/sellUpload";
+    }
+
+    @RequestMapping(path = "/askUpload", method = RequestMethod.GET)
+    public String getAskUpload(Model model) {
+        return "new/askUpload";
     }
 
     //通过分类的第三层id获取全名
