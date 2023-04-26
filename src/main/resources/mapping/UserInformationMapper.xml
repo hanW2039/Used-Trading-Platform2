@@ -200,6 +200,9 @@
       <if test="avatar != null" >
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>

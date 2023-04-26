@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>乐淘淘-编辑商品信息</title>
+	<title>乐淘淘-编辑个人信息</title>
 	<link rel="stylesheet" th:href="@{/css/reset.css}">
 	<link rel="stylesheet" th:href="@{/css/upload.css}">
 </head>
@@ -32,50 +32,31 @@
 		</div> <!-- nav-info-end -->
 	</nav>
 	<div class="titleName">
-		<h3>编辑信息</h3>
+		<h3>编辑个人信息</h3>
 	</div>
 
 	<div class="container">
-		<form class="upload-form" th:action="@{/update}" method="post" enctype="multipart/form-data">
+		<form class="upload-form" th:action="@{/updateUserInformation}" method="post">
 			<p>
-				<span class="pic-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				修改图片： <input type="file" name="image" id="book-file">
-<!--				<img id="book-pic" src="img/loadPic.png">-->
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				用&nbsp;&nbsp;&nbsp;户&nbsp;&nbsp;&nbsp;名：<input type="text" name="username" th:value="${user.username}">
 			</p>
 			<p>
 				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;&nbsp;&nbsp;品&nbsp;&nbsp;&nbsp;名：<input type="text" name="name">
+				班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：<input type="text" name="clazz" th:value="${user.clazz}">
 			</p>
 			<p>
-				<span class="author-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;种&nbsp;类：<input type="text" list="appNamelist" name="kind">
-				<datalist id="appNamelist">
-					<option>数码科技</option>
-					<option>影音家电</option>
-					<option>鞋服配饰</option>
-					<option>运动代步</option>
-					<option>书籍文具</option>
-					<option>其他</option>
-				</datalist>
-
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：<input type="text" name="sno" th:value="${user.sno}">
 			</p>
 			<p>
-				<span class="price-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;售&nbsp;价：<input type="text" name="price">
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				宿&nbsp;&nbsp;&nbsp;舍&nbsp;&nbsp;&nbsp;号：<input type="text" name="dormitory" th:value="${user.dormitory}">
 			</p>
 			<p>
-				<span class="time-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				购&nbsp;买&nbsp;&nbsp;时&nbsp;间：<input type="month" name="modified">
+				<span class="name-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<input type="text" name="gender" th:value="${user.gender}">
 			</p>
-			<p>
-				<span class="condition-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;品&nbsp;相：<input type="text" name="level">
-			</p>
-			<p>
-				<span class="desc-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				商&nbsp;品&nbsp;&nbsp;描&nbsp;述：<input type="text" name="remark">
-			</p>
-			<input type="hidden" id="id"  name="id" th:value="${id}">
 			<input type="submit" class="submit-btn" name="book-submit">
 		</form>
 	</div>

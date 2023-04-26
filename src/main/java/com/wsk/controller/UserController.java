@@ -10,6 +10,7 @@ import com.wsk.service.*;
 import com.wsk.token.TokenProccessor;
 import com.wsk.tool.SaveSession;
 import com.wsk.tool.StringUtils;
+import com.wsk.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,84 +70,18 @@ public class UserController {
     private AllKindsService allKindsService;
     @Resource
     private ShopContextService shopContextService;
+    @Resource
+    private HostHolder hostHolder;
 
-    //进入登录界面
-    @RequestMapping(value = "/login.do", method = RequestMethod.GET)
-    public String login(HttpServletRequest request, Model model) {
-        String token = TokenProccessor.getInstance().makeToken();
-        log.info("进入登录界面，token为:" + token);
-        request.getSession().setAttribute("token", token);
-        model.addAttribute("token", token);
-        return "login";
+    @RequestMapping(path = "/updateUserInformation")
+    public String updateUser(UserInformation userInformation) {
+        userInformation.setId(hostHolder.getUser().getId());
+        userInformationService.updateByPrimaryKeySelective(userInformation);
+//        return "new/myBookSelf";
+        return "redirect:/myBookSelf";
     }
 
-    //退出
-    @RequestMapping(value = "/logout.do")
-    public String logout(HttpServletRequest request) {
-        try {
-            request.getSession().removeAttribute("userInformation");
-            request.getSession().removeAttribute("uid");
-            System.out.println("logout");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/home.do";
-        }
-        return "redirect:/";
-    }
 
-    //用户注册,拥有插入数据而已，没什么用的
-    @RequestMapping(value = "/registered.do", method = RequestMethod.POST)
-    public String registered(Model model,
-                             @RequestParam String name, @RequestParam String phone, @RequestParam String password) {
-        UserInformation userInformation = new UserInformation();
-        userInformation.setUsername(name);
-        userInformation.setPhone(phone);
-        userInformation.setModified(new Date());
-        userInformation.setCreatetime(new Date());
-        if (userInformationService.insertSelective(userInformation) == 1) {
-            int uid = userInformationService.selectIdByPhone(phone);
-            UserPassword userPassword = new UserPassword();
-            userPassword.setModified(new Date());
-            password = StringUtils.getInstance().getMD5(password);
-            userPassword.setPassword(password);
-            userPassword.setUid(uid);
-            int result = userPasswordService.insertSelective(userPassword);
-            if (result != 1) {
-                model.addAttribute("result", "fail");
-                return "success";
-            }
-            model.addAttribute("result", "success");
-            return "success";
-        }
-        model.addAttribute("result", "fail");
-        return "success";
-    }
-
-    //用户注册
-//    @RequestMapping(value = "/registered", method = RequestMethod.GET)
-//    public String registered() {
-//        return "registered";
-//    }
-
-    //验证登录
-    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
-    public String login(HttpServletRequest request,
-                        @RequestParam String phone, @RequestParam String password, @RequestParam String token) {
-        String loginToken = (String) request.getSession().getAttribute("token");
-        if (StringUtils.getInstance().isNullOrEmpty(phone) || StringUtils.getInstance().isNullOrEmpty(password)) {
-            return "redirect:/login.do";
-        }
-        //防止重复提交
-        if (StringUtils.getInstance().isNullOrEmpty(token) || !token.equals(loginToken)) {
-            return "redirect:/login.do";
-        }
-        boolean b = getId(phone, password, request);
-        //失败，不存在该手机号码
-        if (!b) {
-            return "redirect:/login.do?msg=不存在该手机号码";
-        }
-        return "redirect:/";
-    }
 
     //查看用户基本信息
     @RequestMapping(value = "/personal_info.do")

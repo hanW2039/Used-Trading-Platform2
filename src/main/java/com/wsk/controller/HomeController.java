@@ -162,6 +162,12 @@ public class HomeController {
         return stringBuffer.toString();
     }
 
+    @RequestMapping("/getEditUser")
+    public String editUserInformation(Model model){
+        model.addAttribute("user", hostHolder.getUser());
+        return "new/updateuserinformation";
+    }
+
     //获得分类中的第一层
     @RequestMapping(value = "/getAllKinds.do")
     @ResponseBody
