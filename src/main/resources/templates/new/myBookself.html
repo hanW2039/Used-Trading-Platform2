@@ -24,10 +24,11 @@
 		</form>
 
 		<div class="nav-info">
-			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+			<a th:href="@{/myBookSelf}" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
 			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
-			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+			<!--			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>-->
 			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+			<a th:href="@{/shopping_cart}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购物车</a>
 			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 		</div> <!-- nav-info-end -->
 	</nav>
@@ -66,8 +67,8 @@
 		<span title="sell-book" id="sell-btn" class="active">我的小摊</span>
 		<span title="ask-book" id="ask-btn">我的求购</span>
 		<p class="upload-icon"></p>
-		<a id="sell-upload" th:href="@{/sellUpload}">上传书至书摊</a>
-		<a id="ask-upload" th:href="@{/askUpload}">上传求书信息</a>
+		<a id="sell-upload" th:href="@{/sellUpload}">添加商品</a>
+		<a id="ask-upload" th:href="@{/askUpload}">添加求购</a>
 <!--		<a id="delete-book" href="#delete-btn">删除商品</a>-->
 	</div>
 
@@ -114,9 +115,9 @@
 		</div><!-- ask-book-end-->
 	</div> <!-- container-end -->
 
-	<footer>
-		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>
-	</footer>
+<!--	<footer>-->
+<!--		<a href="#">意见反馈&nbsp;&nbsp;&nbsp;联系我们&nbsp;&nbsp;&nbsp;隐私权声明&nbsp;&nbsp;&nbsp;使用条款</a>-->
+<!--	</footer>-->
 
 	<!-- javascript- -->
 	<script type="text/javascript" th:src="@{/js/jquery-3.2.js}"></script>

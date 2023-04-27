@@ -17,15 +17,16 @@
 		</div><!-- nav-menu -->
 
 		<form class="nav-search">
-			<input type="search" class="searchIn" placeholder="搜图书...">
+			<input type="search" class="searchIn" placeholder="搜商品...">
 			<button class="search-logo"><img th:src="@{/img/search2.png}"></button>
 		</form>
 
 		<div class="nav-info">
-			<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+			<a th:href="@{/myBookSelf}" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
 			<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
-			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+			<!--			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>-->
 			<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+			<a th:href="@{/shopping_cart}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购物车</a>
 			<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 		</div> <!-- nav-info-end -->
 	</nav>

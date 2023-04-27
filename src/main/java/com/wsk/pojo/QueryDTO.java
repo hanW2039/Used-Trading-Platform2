@@ -19,4 +19,6 @@ public class QueryDTO {
 
     private Integer limit;
 
+    private String name;
+
 }

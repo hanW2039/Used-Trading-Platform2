@@ -167,18 +167,3 @@ table {
 .all_sum {
     text-align: right;
 }
-footer {
-    width: 96%;
-    background-color: slateblue;
-    box-shadow: 4px 2px 10px #888888;
-    border-radius: 10px;
-    height: 80px;
-    margin-left: 2%;
-}
-footer p {
-    padding-top: 35px;
-    vertical-align: middle;
-    text-align: center;
-    color: white;
-    font-size: 1.2em;
-}

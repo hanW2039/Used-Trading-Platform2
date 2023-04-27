@@ -74,7 +74,7 @@ public class HomeController {
     }
 
     @RequestMapping(path = "/store", method = RequestMethod.GET)
-    public String getBookStore(Model model, Page page) {
+    public String getBookStore(Model model, Page page, @RequestParam(required = false) String name) {
         if(page.getCurrent() < 1) {
             page.setCurrent(1);
         }
@@ -83,10 +83,17 @@ public class HomeController {
         }
         List<AllKinds> allKinds = allKindsService.selectAll();
         page.setRows(shopInformationService.getCounts());
-        page.setPath("/store");
+        if(name == null) {
+            page.setPath("/store");
+        }else {
+            page.setPath("/store?name=" + name);
+        }
         QueryDTO queryDTO = new QueryDTO();
         queryDTO.setLimit(page.getLimit());
         queryDTO.setOffset(page.getOffSet());
+        if(name != null) {
+            queryDTO.setName(name);
+        }
         List<ShopInformation> list = shopInformationService.selectByPage(queryDTO);
         model.addAttribute("allKinds", allKinds);
         model.addAttribute("shopList", list);

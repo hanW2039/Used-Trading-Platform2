@@ -367,41 +367,22 @@ public class GoodsController {
 
     //模糊查询商品
     @RequestMapping(value = "/findShopByName.do")
-    public String findByName(HttpServletRequest request, Model model,
-                             @RequestParam String name) {
-        try {
-            List<ShopInformation> shopInformations = shopInformationService.selectByName(name);
-            UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-            if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-                userInformation = new UserInformation();
-                model.addAttribute("userInformation", userInformation);
-            } else {
-                model.addAttribute("userInformation", userInformation);
-            }
-            List<ShopInformationBean> shopInformationBeans = new ArrayList<>();
-            String sortName;
-            for (ShopInformation shopInformation : shopInformations) {
-                int sort = shopInformation.getSort();
-                sortName = getSort(sort);
-                ShopInformationBean shopInformationBean = new ShopInformationBean();
-                shopInformationBean.setId(shopInformation.getId());
-                shopInformationBean.setName(shopInformation.getName());
-                shopInformationBean.setLevel(shopInformation.getLevel());
-                shopInformationBean.setRemark(shopInformation.getRemark());
-                shopInformationBean.setPrice(shopInformation.getPrice().doubleValue());
-                shopInformationBean.setQuantity(shopInformation.getQuantity());
-                shopInformationBean.setTransaction(shopInformation.getTransaction());
-                shopInformationBean.setSort(sortName);
-                shopInformationBean.setUid(shopInformation.getUid());
-                shopInformationBean.setImage(shopInformation.getImage());
-                shopInformationBeans.add(shopInformationBean);
-            }
-            model.addAttribute("shopInformationBean", shopInformationBeans);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:mall_page.do";
+    public String findByName(HttpServletRequest request, Page page, Model model, @RequestParam String name) {
+        if(page.getCurrent() < 1) {
+            page.setCurrent(1);
         }
-        return "page/mall_page";
+        if(page.getCurrent() > page.getTotal()) {
+            page.setCurrent(page.getTotal());
+        }
+        List<ShopInformation> shopInformations = shopInformationService.selectByName(name);
+//            if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
+//                userInformation = new UserInformation();
+//                model.addAttribute("userInformation", userInformation);
+//            } else {
+//                model.addAttribute("userInformation", userInformation);
+//            }
+        model.addAttribute("shopInformation", shopInformations);
+        return "new/bookStore";
     }
 
     //进入查看商品详情

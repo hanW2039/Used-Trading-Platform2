@@ -10,18 +10,21 @@
 	<header>
 		<nav class="navbar">
 			<div class="nav-info">
-				<a href="#" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
+				<a th:href="@{/myBookSelf}" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
 				<a th:href="@{/login}" class="username" th:if="${loginUser==null}">登录</a>
-				<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>
+				<!--			<a th:href="@{/myBookSelf}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;我的小摊</a>-->
 				<a th:href="@{/register}" class="bookshelf" th:if="${loginUser==null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册</a>
+				<a th:href="@{/shopping_cart}" class="bookshelf" th:if="${loginUser!=null}">||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购物车</a>
 				<a th:href="@{/logout}" class="logout" th:if="${loginUser!=null}">[ 退 出 ]</a>
 			</div> <!-- nav-info -->
 			<div class="nav-search">
-				<a href="index.html"><img class="logo" th:src="@{/img/logo2.png}"></a>
+				<a href="#"><img class="logo" th:src="@{/img/logo2.png}"></a>
 				<div class="search-form">
-					<input type="search" class="searchIn" placeholder="搜商品...">
-					<a href="#" class="search-logo">| &nbsp;<img src="img/search.png"></a>
-					<button class="searchBtn"><a href="#">搜索</a></button>
+					<form th:action="@{/store}" method="get">
+						<input type="search" class="searchIn" placeholder="搜商品..." name="name">
+						<a href="#" class="search-logo">| &nbsp;<img th:src="@{/img/search.png}"></a>
+						<button type="submit" class="searchBtn"><a href="#">搜索</a></button>
+					</form>
 				</div>
 			</div><!--  nav-search -->
 			<ul class="menu">
@@ -34,23 +37,23 @@
 	</header>
 	<!-- 图书分类 -->
 	<div id="container">
-		<div id="book-menu">
-			<ul class="book-class">
-				<li><a href="#article" title="article">小说 / 文学 / 语言文字</a></li>
-				<li><a href="#">历史 / 地理 / 艺术</a></li>
-				<li><a href="#">政治 / 法律 / 军事</a></li>
-				<li><a href="#">哲学 / 心理 / 宗教</a></li>
-				<li><a href="#">经济 / 社科 / 综合</a></li>
-				<li><a href="#">童书 / 生活 / 体育</a></li>
-				<li><a href="#">教材 / 教辅 / 考试</a></li>
-				<li><a href="#">工程技术 / 互联网</a></li>
-				<li><a href="#">自然科学 / 医药卫生</a></li>
-			</ul>
-		</div>
-		<div id="book-menu-toggle">
-			查 看 菜 单
-			<div id="toggle-btn"></div>
-		</div>
+<!--		<div id="book-menu">-->
+<!--			<ul class="book-class">-->
+<!--				<li><a href="#article" title="article">小说 / 文学 / 语言文字</a></li>-->
+<!--				<li><a href="#">历史 / 地理 / 艺术</a></li>-->
+<!--				<li><a href="#">政治 / 法律 / 军事</a></li>-->
+<!--				<li><a href="#">哲学 / 心理 / 宗教</a></li>-->
+<!--				<li><a href="#">经济 / 社科 / 综合</a></li>-->
+<!--				<li><a href="#">童书 / 生活 / 体育</a></li>-->
+<!--				<li><a href="#">教材 / 教辅 / 考试</a></li>-->
+<!--				<li><a href="#">工程技术 / 互联网</a></li>-->
+<!--				<li><a href="#">自然科学 / 医药卫生</a></li>-->
+<!--			</ul>-->
+<!--		</div>-->
+<!--		<div id="book-menu-toggle">-->
+<!--			查 看 菜 单-->
+<!--			<div id="toggle-btn"></div>-->
+<!--		</div>-->
 		<div id="book-container">
 			<h3 class="book-title"><a href="#">| 所有商品</a></h3>
 			<ul class="book-lists">
@@ -64,7 +67,7 @@
 						<span class="book-detail" th:text="${shop.remark}">东野圭吾 著 / 南海出版公司 / 2008-09 / 平装</span>
 					</a>
 					<span class="book-price"><a th:utext="${shop.price}">12</a>
-						<a href="#" class="book-buy">立即下单</a>
+						<a href="#" class="book-buy">加入购物车</a>
 					</span>
 				</li>
 			</ul><!--  book-list end -->
