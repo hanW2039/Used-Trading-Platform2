@@ -4,6 +4,7 @@ import com.wsk.bean.ShopContextBean;
 import com.wsk.bean.ShopInformationBean;
 import com.wsk.bean.UserWantBean;
 import com.wsk.pojo.*;
+import com.wsk.response.BaseResponse;
 import com.wsk.service.*;
 import com.wsk.token.TokenProccessor;
 import com.wsk.tool.StringUtils;
@@ -46,6 +47,8 @@ public class GoodsController {
     private AllKindsService allKindsService;
     @Resource
     private UserWantService userWantService;
+    @Resource
+    private GoodsCarService goodsCarService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -332,138 +335,40 @@ public class GoodsController {
         return "redirect:/myBookSelf";
     }
 
-    //进入到发布商品页面
-    @RequestMapping(value = "/publish_product.do", method = RequestMethod.GET)
-    public String publish(HttpServletRequest request, Model model) {
-        //先判断用户有没有登录
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            //如果没有登录
-            return "redirect:/login.do";
-        } else {
-            model.addAttribute("userInformation", userInformation);
+    @RequestMapping(path = "/buy")
+    public String buy(Model model, @RequestParam String ids) {
+        String[] split = ids.split(",");
+        List<String> idList = Arrays.asList(split);
+        List<ShopInformation> shopInformationList = new ArrayList<>();
+        goodsCarService.
+        BigDecimal sum = BigDecimal.ZERO; // 使用静态常量ZERO来初始化sum为0
+        for(String id : idList) {
+            ShopInformation key = shopInformationService.selectByPrimaryKey(Integer.valueOf(id));
+            shopInformationList.add(key);
+            sum = sum.add(key.getPrice()); // 将结果赋值给sum，并且使用add方法获得新的BigDecimal对象
         }
-        //如果登录了，判断该用户有没有经过认证
-        try {
-            String realName = userInformation.getRealname();
-            String sno = userInformation.getSno();
-            String dormitory = userInformation.getDormitory();
-            if (StringUtils.getInstance().isNullOrEmpty(realName) || StringUtils.getInstance().isNullOrEmpty(sno) || StringUtils.getInstance().isNullOrEmpty(dormitory)) {
-                //没有
-                model.addAttribute("message", "请先认证真实信息");
-                return "redirect:personal_info.do";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/login.do";
-        }
-        String goodsToken = TokenProccessor.getInstance().makeToken();
-        request.getSession().setAttribute("goodsToken", goodsToken);
-        model.addAttribute("shopInformation", new ShopInformation());
-        model.addAttribute("action", 1);
-        model.addAttribute("token", goodsToken);
-        return "page/publish_product";
+        model.addAttribute("sum", sum.toString());
+        model.addAttribute("shopList", shopInformationList);
+        model.addAttribute("length",idList.size());
+        UserInformation user = hostHolder.getUser();
+        model.addAttribute("user",user);
+         return "new/balance";
     }
 
-    //模糊查询商品
-    @RequestMapping(value = "/findShopByName.do")
-    public String findByName(HttpServletRequest request, Page page, Model model, @RequestParam String name) {
-        if(page.getCurrent() < 1) {
-            page.setCurrent(1);
-        }
-        if(page.getCurrent() > page.getTotal()) {
-            page.setCurrent(page.getTotal());
-        }
-        List<ShopInformation> shopInformations = shopInformationService.selectByName(name);
-//            if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-//                userInformation = new UserInformation();
-//                model.addAttribute("userInformation", userInformation);
-//            } else {
-//                model.addAttribute("userInformation", userInformation);
-//            }
-        model.addAttribute("shopInformation", shopInformations);
-        return "new/bookStore";
+    @RequestMapping(path = "/balance")
+    public String getBalance(Model model, @RequestBody List<String> ids) {
+//        shopInformationService.
+        return "new/balance";
     }
 
-    //进入查看商品详情
-    @RequestMapping(value = "/selectById.do")
-    public String selectById(@RequestParam int id,
-                             HttpServletRequest request, Model model) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            userInformation = new UserInformation();
-            model.addAttribute("userInformation", userInformation);
-        }
-        try {
-            ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(id);
-            model.addAttribute("shopInformation", shopInformation);
-            List<ShopContext> shopContexts = shopContextService.selectById(id);
-            List<ShopContextBean> shopContextBeans = new ArrayList<>();
-            for (ShopContext s : shopContexts) {
-                ShopContextBean shopContextBean = new ShopContextBean();
-                UserInformation u = userInformationService.selectByPrimaryKey(s.getUid());
-                shopContextBean.setContext(s.getContext());
-                shopContextBean.setId(s.getId());
-                shopContextBean.setModified(s.getModified());
-                shopContextBean.setUid(u.getId());
-                shopContextBean.setUsername(u.getUsername());
-                shopContextBeans.add(shopContextBean);
-            }
-            String sort = getSort(shopInformation.getSort());
-            String goodsToken = TokenProccessor.getInstance().makeToken();
-            request.getSession().setAttribute("goodsToken", goodsToken);
-            model.addAttribute("token", goodsToken);
-            model.addAttribute("sort", sort);
-            model.addAttribute("userInformation", userInformation);
-            model.addAttribute("shopContextBeans", shopContextBeans);
-            return "page/product_info";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/";
-        }
+    @RequestMapping(path = "/shopCar")
+    public String shopCar() {
+        return "new/shopCar";
     }
 
-    //进入到求购商城
-    @RequestMapping(value = "/require_mall.do")
-    public String requireMall(HttpServletRequest request, Model model) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            userInformation = new UserInformation();
-            model.addAttribute("userInformation", userInformation);
-        } else {
-            model.addAttribute("userInformation", userInformation);
-        }
-        List<UserWant> userWants = userWantService.selectAll();
-        List<UserWantBean> list = new ArrayList<>();
-        for (UserWant userWant : userWants) {
-            UserWantBean u = new UserWantBean();
-            u.setSort(getSort(userWant.getSort()));
-            u.setRemark(userWant.getRemark());
-            u.setQuantity(userWant.getQuantity());
-            u.setPrice(userWant.getPrice().doubleValue());
-            u.setUid(userWant.getUid());
-            u.setId(userWant.getId());
-            u.setModified(userWant.getModified());
-            u.setName(userWant.getName());
-            list.add(u);
-        }
-        model.addAttribute("list", list);
-        return "page/require_mall";
-    }
 
-    //通过id查看商品的详情
-    @RequestMapping(value = "/findShopById.do")
-    @ResponseBody
-    public ShopInformation findShopById(@RequestParam int id) {
-        return shopInformationService.selectByPrimaryKey(id);
-    }
 
-//    //通过分类选择商品
-//    @RequestMapping(value = "/selectBySort.do")
-//    @ResponseBody
-//    public List<ShopInformation> selectBySort(@RequestParam int sort) {
-//        return shopInformationService.selectBySort(sort);
-//    }
+
 
     //分页查询
     @RequestMapping(value = "/selectByCounts.do")

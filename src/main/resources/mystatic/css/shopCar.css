@@ -1,0 +1,71 @@
+/* 淘宝风格 reset */
+html,body,ul,ol,li,h1,h2,h3,h4,h5,h6,p,blockquote,pre,form,label,table,caption,tbody,tfoot,thead,tr,th,td,textarea,input,select{margin:0;padding:0;}
+body{font-size:12px;font-family:"微软雅黑",Arial,"Hiragino Sans GB",sans-serif;line-height:1.5;background:#f5f5f5;color:#333}
+a{text-decoration:none;color:#333}
+a:hover{text-decoration:none;color:#FF4400}
+h1,h2,h3,h4,h5,h6{font-weight:normal}
+.clear{clear:both}
+img{border:none;vertical-align:middle}
+input,select,textarea{outline:none}
+table{border-collapse:collapse;border-spacing:0}
+.mt10{margin-top:10px;}
+.ml10{margin-left:10px;}
+.fl{float:left;}
+.fr{float:right;}
+.tc{text-align:center;}
+.tl{text-align:left;}
+.tr{text-align:right;}
+.pt10{padding-top:10px;}
+.pr10{padding-right:10px;}
+.pb10{padding-bottom:10px;}
+.pl10{padding-left:10px;}
+.pa10{padding:10px;}
+.pa15{padding:15px;}
+.pa20{padding:20px;}
+.b40{border-bottom:1px solid #ddd;}
+.bg{background:#fff;}
+.bg_gray{background:#f5f5f5;}
+.color_666{color:#666;}
+.font_normal{font-weight:normal;}
+.f18{font-size:18px;}
+.f14{font-size:14px;}
+.f12{font-size:12px;}
+.full_width{width:100%;}
+.textinput{border:1px solid #DDD;padding:5px 8px;margin-top:2px;font-size:14px;color:#777;width:250px;}
+.textinput:focus{border-color:#FF4400;box-shadow:0 0 3px #FFDDAA;}
+.btn{display:inline-block;height:30px;line-height:30px;padding:0 15px;border-radius:3px;background:#FF4400;color:#fff;font-size:14px;text-align:center;transition:all .2s ease-in-out;cursor:pointer;}
+.btn:hover{background:#E53333;color:#fff;box-shadow:0 0 3px #FFDDAA;}
+.btn-success{background-color:#5cb85c;border-color:#4cae4c;color:#fff;transition:all .2s ease-in-out;}
+.btn-success:hover{background:#449d44;border-color:#398439;}
+.main_tit{height:40px;line-height:40px;margin-bottom:10px;background:#f5f5f5;border:1px solid #ddd;border-bottom:none;position:relative;}
+.main_tit span{position:absolute;top:-1px;left:-1px;background:#f5f5f5;border:1px solid #ddd;padding:0 10px;}
+.main_tit strong{color:#666;margin-left:10px;}
+.cart_step{height:40px;line-height:40px;margin-bottom:10px;background:#fff;border:1px solid #ddd;border-top:none;}
+.cart_step ul{list-style:none;display:inline-block;}
+.cart_step ul li{float:left;width:33.333%;color:#666;text-align:center;position:relative;}
+.cart_step ul li.selected{color:#FF4400;}
+.cart_step ul li span{position:absolute;top:-30px;left:50%;margin-left:-5px;display:inline-block;width:10px;height:10px;background:#ddd;border-radius:50%;color:#fff;line-height:10px;text-align:center;}
+.cart_step ul li.selected span{background:#FF4400;}
+.line20{height:20px;border-top:1px solid #ddd;margin-bottom:10px;}
+.cart_table{width:100%;background:#fff;border:1px solid #ddd;}
+.cart_table th,.cart_table td{text-align:center;border-right:1px solid #ddd;border-bottom:1px solid #ddd;}
+.cart_table th{background:#f5f5f5;}
+.cart_table .selected{background:#FFF9D7;}
+.cart_table th:first-child,.cart_table td:first-child{border-left:none;}
+.cart_table th:last-child,.cart_table td:last-child{width:100px;border-right:none;}
+.cart_table img{max-width:60px;max-height:60px;}
+.cart_table a{color:#FF4400;}
+.cart_table .input{border:1px solid #ddd;height:20px;line-height:20px;padding:0 5px;width:30px;text-align:center;}
+.cart_table .reduce,.cart_table .subjoin{display:inline-block;width:18px;height:18px;color:#777;background:url(http://img01.taobaocdn.com/tps/i1/T1f0FgXaJXXXbL75zW-16-16.png) no-repeat;}
+.cart_table .reduce{background-position:0 -80px;}
+.cart_table .subjoin{background-position:0 -60px;}
+.cart_table .reduce:hover,.cart_table .subjoin:hover{background-color:#FF4400;color:#fff;}
+.cart_table label{font-size:14px;font-weight:bold;}
+.cart_table font{font-size:14px;font-weight:bold;}
+.cart_table input{border:none;font-size:14px;font-weight:bold;width:auto;text-align:center;background:none;color:#FF4400;outline:none;}
+.cart_total{margin-top:10px;margin-bottom:20px;}
+.cart_total ul{list-style:none;}
+.cart_total ul li{height:30px;line-height:30px;margin-bottom:5px;}
+.cart_total ul li span{float:right;font-size:14px;color:#FF4400;font-weight:bold;}
+.cart_total .btn_go{display:inline-block;height:34px;line-height:34px;padding:0 22px;background:#FF4400;border-radius:4px;font-size:16px;color:#fff;text-decoration:none;transition:all .2s ease-in-out;cursor:pointer;}
+.cart_total .btn_go:hover{background:#E53333;}

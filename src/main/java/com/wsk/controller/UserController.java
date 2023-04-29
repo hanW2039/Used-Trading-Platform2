@@ -416,7 +416,7 @@ public class UserController {
             goodsCarBean.setRemark(shopInformation.getRemark());
             goodsCarBean.setImage(shopInformation.getImage());
             goodsCarBean.setPrice(shopInformation.getPrice().doubleValue());
-            goodsCarBean.setSort(getSort(shopInformation.getSort()));
+//            goodsCarBean.setSort(getSort(shopInformation.getSort()));
             goodsCarBeans.add(goodsCarBean);
         }
         model.addAttribute("list", goodsCarBeans);
@@ -444,12 +444,11 @@ public class UserController {
 //    }
 
     //添加到购物车
-    @RequestMapping(value = "/insertGoodsCar.do")
-    @ResponseBody
-    public BaseResponse insertGoodsCar(HttpServletRequest request, @RequestParam int id) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
+    @RequestMapping(value = "/addCar")
+    public String insertGoodsCar(Integer id) {
+        UserInformation userInformation = hostHolder.getUser();
         if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            return BaseResponse.fail();
+            return "new/login";
         }
         int uid = userInformation.getId();
         GoodsCar goodsCar = new GoodsCar();
@@ -458,30 +457,23 @@ public class UserController {
         goodsCar.setQuantity(1);
         goodsCar.setUid(uid);
         goodsCar.setSid(id);
-        int result = goodsCarService.insertSelective(goodsCar);
-        return BaseResponse.success();
+        goodsCarService.insertSelective(goodsCar);
+        return "redirect:/store";
     }
 
 
     //删除购物车的商品
-    @RequestMapping(value = "/deleteShopCar.do")
-    @ResponseBody
-    public BaseResponse deleteShopCar(HttpServletRequest request, @RequestParam int id, @RequestParam int sid) {
-        UserInformation userInformation = (UserInformation) request.getSession().getAttribute("userInformation");
-        if (StringUtils.getInstance().isNullOrEmpty(userInformation)) {
-            return BaseResponse.fail();
-        }
+    @RequestMapping(value = "/deleteCar")
+    public String deleteCar(@RequestParam int id, @RequestParam int sid) {
+        UserInformation userInformation = hostHolder.getUser();
         int uid = userInformation.getId();
         GoodsCar goodsCar = new GoodsCar();
         goodsCar.setDisplay(0);
         goodsCar.setId(id);
         goodsCar.setSid(sid);
         goodsCar.setUid(uid);
-        int result = goodsCarService.updateByPrimaryKeySelective(goodsCar);
-        if (result != 1) {
-            return BaseResponse.fail();
-        }
-        return BaseResponse.success();
+        goodsCarService.updateByPrimaryKeySelective(goodsCar);
+        return "redirect:/shopping_cart";
     }
 
     //发布商品

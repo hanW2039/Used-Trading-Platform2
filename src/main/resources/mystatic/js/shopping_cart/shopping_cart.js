@@ -82,7 +82,7 @@ $(function () {
             var sid = $(this).parent().siblings(".show_img").children().attr("value");
             // alert(sid);
             $.ajax({
-                url:'deleteShopCar.do',
+                url:'deleteCar',
                 dataType:'JSON',
                 type:'post',
                 data:{id:id,sid:sid},
@@ -102,4 +102,16 @@ $(function () {
             })
         }
     })
+
+    $('.deleteShopCar').click(function() {
+            var id = [""];
+            $('.cart_content table tr.table_content').each(function () {
+                var isCheck = $(this).children("td.input_checkbox").children("input").is(":checked");
+                if(isCheck){
+                    id.push($(this).children(".per_sum").children("span").html());
+                }
+            });
+            sum = returnFloat(sum);
+            $('.end_pay').children(".all_sum").children("span").html(sum);
+        })
 });
