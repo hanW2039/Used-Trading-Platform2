@@ -23,18 +23,60 @@ $(function () {
         if (num>=2) {
             num--;
         }
-        $(this).siblings(".number").html(num);
-        var cost = $(this).parent().siblings(".cost").children("span").html();
-        $(this).parent().siblings(".per_sum").children("span").html(returnFloat(cost*num));
-        calSum();
+        var inputElement = document.getElementById("car");
+        var id = inputElement.value;
+        // 向后端发送选中的项目的 ID
+//         $.ajax({
+//            type: "POST",
+//            url: "/reduceOne",
+//            data: JSON.stringify(id),
+//            contentType: "application/json; charset=utf-8",
+//            success: function(data) {
+//
+//            }
+//         });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/reduceOne', false);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.send(JSON.stringify(id));
+
+        if (xhr.status === 200) {
+           $(this).siblings(".number").html(num);
+           var cost = $(this).parent().siblings(".cost").children("span").html();
+           $(this).parent().siblings(".per_sum").children("span").html(returnFloat(cost*num));
+           calSum();
+        } else {
+            alert('数量不可以小于1');
+        }
+
     });
     $('span.add').click(function () {
         var num = $(this).siblings(".number").html();
         num++;
-        $(this).siblings(".number").html(num);
-        var cost = $(this).parent().siblings(".cost").children("span").html();
-        $(this).parent().siblings(".per_sum").children("span").html(returnFloat(cost*num));
-        calSum();
+        var inputElement = document.getElementById("car");
+        var id = inputElement.value;
+//        $.ajax({
+//            type: "POST",
+//            url: "/addOne",
+//            data: JSON.stringify(id),
+//            contentType: "application/json; charset=utf-8",
+//            error: function(data) {
+//                 alert('超出库存');
+//            }
+//        });
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/addOne', false);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.send(JSON.stringify(id));
+
+        if (xhr.status === 200) {
+            $(this).siblings(".number").html(num);
+            var cost = $(this).parent().siblings(".cost").children("span").html();
+            $(this).parent().siblings(".per_sum").children("span").html(returnFloat(cost*num));
+            calSum();
+        } else {
+            alert('超出库存');
+        }
     });
     $('.table_content td.input_checkbox input').change(function () {
         calSum();

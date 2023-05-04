@@ -58,6 +58,7 @@
 			<h3 class="book-title"><a href="#">| 所有商品</a></h3>
 			<ul class="book-lists">
 				<li class="book-list" th:each="shop:${shopList}">
+					<input type="hidden" name="shopid" id="shopid" th:value="${shop.id}">
 					<a class="book-pic">
 						<img th:src="${shop.image}">
 					</a>
@@ -67,7 +68,8 @@
 						<span class="book-detail" th:text="${shop.remark}">东野圭吾 著 / 南海出版公司 / 2008-09 / 平装</span>
 					</a>
 					<span class="book-price"><a th:utext="${shop.price}">12</a>
-						<a th:href="@{/addCar/(id=${shop.id})}" class="book-buy">加入购物车</a>
+<!--						<a th:href="@{/addCar/(id=${shop.id})}" class="book-buy">加入购物车</a>-->
+						<button  onclick="add()"><a class="book-buy">加入购物车</a></button>
 					</span>
 				</li>
 			</ul><!--  book-list end -->
@@ -82,6 +84,23 @@
 	</div><!-- container end-->
 
 	<script type="text/javascript" th:src="@{/js/jquery-3.2.js}"></script>
+	<script>
+		function add() {
+			var shopId = document.getElementById("shopid");
+			var id = shopId.value;
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/addToCar', false);
+			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+			xhr.send(JSON.stringify(id));
+
+			if (xhr.status === 200) {
+				 alert('添加成功');
+			} else {
+			   var url = "login"
+         	   window.location.href = nextPageUrl;
+			}
+        }
+	</script>
 	<script type="text/javascript">
 		$(function () {
 			//菜单特效

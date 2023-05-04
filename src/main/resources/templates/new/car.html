@@ -24,9 +24,9 @@
     </div><!-- nav-menu -->
 
     <form class="nav-search">
-        <input type="search" class="searchIn" placeholder="搜商品...">
-        <button class="search-logo"><img th:src="@{/img/search2.png}"></button>
-    </form>
+<!--        <input type="search" class="searchIn" placeholder="搜商品...">-->
+<!--        <button class="search-logo"><img th:src="@{/img/search2.png}"></button>-->
+<!--    </form>-->
 
     <div class="nav-info">
         <a th:href="@{/myBookSelf}" class="username" th:if="${loginUser!=null}" th:text="${loginUser.phone}">你的名字</a>
@@ -62,6 +62,8 @@
                 <th>编辑</th>
             </tr>
             <tr class="table_content" th:each="o:${list}">
+                <input type="hidden" name="carid" id="car" th:value="${o.id}">
+                <input type="hidden" name="carid" id="carSid" th:value="${o.sid}">
                 <td class="input_checkbox">
                     <input id="1" type="checkbox" checked="checked" name="checkbox" th:value="${o.sid}"/></td>
                 <td class="show_img">
@@ -73,6 +75,7 @@
                 </td>
                 <td class="per_sum">￥<span th:with="sum=${o.price}*${o.quantity}" th:text="${sum}">40.00</span>元</td>
                 <td class="delete_img"><a th:href="@{/deleteCar/(id=${o.id},sid=${o.sid})}"><img th:src="@{/img/delete_icon.jpg}" th:value="${o.id}" class="deleteShopCar"/></a></td>
+<!--                <td class="delete_img" ><a onclick="deleteCar()"><img th:src="@{/img/delete_icon.jpg}" th:value="${o.id}" class="deleteShopCar"/></a></td>-->
             </tr>
 
             <tr class="end_pay">
@@ -85,6 +88,29 @@
             </tr>
         </table>
     </div>
+    <script>
+        function deleteCar() {
+            var ids = [];
+            var shopId = document.getElementById("carSid");
+			var sid = shopId.value;
+			console.log(sid);
+			var carId = document.getElementById("car");
+			var cid = carId.value;
+			console.log(cid);
+			ids.push(parseInt(sid));
+			ids.push(parseInt(cid));
+			var sidAndcid = ids.join(",");
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/deleteCar', false);
+			xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+			xhr.send(sidAndcid);
+
+			if (xhr.status === 200) {
+				 alert('添加成功');
+			}
+        }
+  </script>
     <script>
         function buy() {
           var selectedItems = [];

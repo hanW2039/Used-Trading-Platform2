@@ -340,7 +340,7 @@ public class GoodsController {
         String[] split = ids.split(",");
         List<String> idList = Arrays.asList(split);
         List<ShopInformation> shopInformationList = new ArrayList<>();
-        goodsCarService.
+//        goodsCarService.
         BigDecimal sum = BigDecimal.ZERO; // 使用静态常量ZERO来初始化sum为0
         for(String id : idList) {
             ShopInformation key = shopInformationService.selectByPrimaryKey(Integer.valueOf(id));
@@ -355,6 +355,29 @@ public class GoodsController {
          return "new/balance";
     }
 
+    @RequestMapping(path = "/addOne", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse addOne(@RequestBody Integer id) {
+        GoodsCar goodsCar = goodsCarService.selectByPrimaryKey(id);
+        ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(goodsCar.getSid());
+        if(goodsCar.getQuantity() + 1 > shopInformation.getQuantity()) {
+            throw new IllegalArgumentException("库存不够");
+        }
+        goodsCar.setQuantity(goodsCar.getQuantity() + 1);
+        goodsCarService.updateByPrimaryKeySelective(goodsCar);
+        return BaseResponse.success();
+    }
+    @RequestMapping(path = "/reduceOne", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse reduceOne(@RequestBody Integer id) {
+        GoodsCar goodsCar = goodsCarService.selectByPrimaryKey(id);
+        if(goodsCar.getQuantity() <= 1) {
+            throw new IllegalArgumentException("不可小于1");
+        }
+        goodsCar.setQuantity(goodsCar.getQuantity() - 1);
+        goodsCarService.updateByPrimaryKeySelective(goodsCar);
+        return BaseResponse.success();
+    }
     @RequestMapping(path = "/balance")
     public String getBalance(Model model, @RequestBody List<String> ids) {
 //        shopInformationService.
@@ -366,24 +389,20 @@ public class GoodsController {
         return "new/shopCar";
     }
 
-
-
-
-
-    //分页查询
-    @RequestMapping(value = "/selectByCounts.do")
+    @RequestMapping(path = "/addToCar")
     @ResponseBody
-    public List<ShopInformation> selectByCounts(@RequestParam int counts) {
-        Map<String, Integer> map = new HashMap<>();
-        map.put("start", (counts - 1) * 12);
-        map.put("end", 12);
-        return shopInformationService.selectTen(map);
+    public BaseResponse add(@RequestBody Integer id) {
+        GoodsCar goodsCar = new GoodsCar();
+        goodsCar.setQuantity(1);
+        goodsCar.setSid(id);
+        goodsCar.setDisplay(1);
+        goodsCar.setUid(hostHolder.getUser().getId());
+        goodsCar.setModified(new Date());
+        goodsCarService.insertSelective(goodsCar);
+        return BaseResponse.success();
     }
-//    //通过id查看商品详情
-//    @RequestMapping(value = "/showShop")
-//    public String showShop(@RequestParam int id, HttpServletRequest request, Model model) {
-//        ShopInformation shopInformation =
-//    }
+
+
 
     //获取最详细的分类，第三层
     private Specific selectSpecificBySort(int sort) {
