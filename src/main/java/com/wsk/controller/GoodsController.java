@@ -392,11 +392,15 @@ public class GoodsController {
     @RequestMapping(path = "/addToCar")
     @ResponseBody
     public BaseResponse add(@RequestBody Integer id) {
+        UserInformation user = hostHolder.getUser();
+        if (StringUtils.getInstance().isNullOrEmpty(user)) {
+            throw new IllegalArgumentException("未登录");
+        }
         GoodsCar goodsCar = new GoodsCar();
         goodsCar.setQuantity(1);
         goodsCar.setSid(id);
         goodsCar.setDisplay(1);
-        goodsCar.setUid(hostHolder.getUser().getId());
+        goodsCar.setUid(user.getId());
         goodsCar.setModified(new Date());
         goodsCarService.insertSelective(goodsCar);
         return BaseResponse.success();
