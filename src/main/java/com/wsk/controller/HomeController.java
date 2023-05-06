@@ -4,6 +4,7 @@ import com.wsk.bean.ShopInformationBean;
 import com.wsk.dao.ShopInformationMapper;
 import com.wsk.pojo.*;
 import com.wsk.service.*;
+import com.wsk.service.Impl.OperationServiceImpl;
 import com.wsk.tool.StringUtils;
 import com.wsk.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class HomeController {
     private UserWantService userWantService;
     @Resource
     private ShopInformationMapper shopInformationMapper;
+    @Autowired
+    private OperationServiceImpl operationServiceImpl;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model){
@@ -102,6 +105,14 @@ public class HomeController {
 
     @RequestMapping(path = "/detail", method = RequestMethod.GET)
     public String getBookDetail(Model model, String id) {
+        if (null != hostHolder.getUser()) {
+            // 记录操作数据
+            Operation operation = new Operation();
+            operation.setType("1");
+            operation.setUid(hostHolder.getUser().getId());
+            operation.setSid(Integer.valueOf(id));
+            operationServiceImpl.addOperationRecord(operation);
+        }
         ShopInformation shopInformation = shopInformationService.selectByPrimaryKey(Integer.valueOf(id));
         UserInformation userInformation = userInformationService.selectByPrimaryKey(shopInformation.getUid());
         model.addAttribute("userInformation",userInformation);
@@ -175,31 +186,7 @@ public class HomeController {
         return "new/updateuserinformation";
     }
 
-//    @RequestMapping(path = "/car")
-//    public String getCar() {
-//
-//    }
 
-    //获得分类中的第一层
-    @RequestMapping(value = "/getAllKinds.do")
-    @ResponseBody
-    public List<AllKinds> getAllKind() {
-        return getAllKinds();
-    }
-
-    //获得分类中的第二层，通过第一层的id
-    @RequestMapping(value = "/getClassification.do", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Classification> getClassificationByAid(@RequestParam int id) {
-        return selectAllClassification(id);
-    }
-
-    //通过第二层的id获取对应的第三层
-    @RequestMapping(value = "/getSpecific.do")
-    @ResponseBody
-    public List<Specific> getSpecificByCid(@RequestParam int id) {
-        return selectAllSpecific(id);
-    }
 
     //get the shops counts
     @RequestMapping(value = "/getShopsCounts.do")

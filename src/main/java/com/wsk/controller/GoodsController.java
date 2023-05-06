@@ -1,27 +1,20 @@
 package com.wsk.controller;
 
-import com.wsk.bean.ShopContextBean;
-import com.wsk.bean.ShopInformationBean;
-import com.wsk.bean.UserWantBean;
 import com.wsk.pojo.*;
 import com.wsk.response.BaseResponse;
 import com.wsk.service.*;
+import com.wsk.service.Impl.OperationServiceImpl;
 import com.wsk.token.TokenProccessor;
 import com.wsk.tool.StringUtils;
 import com.wsk.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -49,6 +42,8 @@ public class GoodsController {
     private UserWantService userWantService;
     @Resource
     private GoodsCarService goodsCarService;
+    @Autowired
+    private OperationServiceImpl operationServiceImpl;
 
     @Autowired
     private HostHolder hostHolder;
@@ -339,6 +334,17 @@ public class GoodsController {
     public String buy(Model model, @RequestParam String ids) {
         String[] split = ids.split(",");
         List<String> idList = Arrays.asList(split);
+        UserInformation user = hostHolder.getUser();
+        if (null != user) {
+            for(String id : idList) {
+                // 记录操作数据
+                Operation operation = new Operation();
+                operation.setType("3");
+                operation.setUid(user.getId());
+                operation.setSid(Integer.valueOf(id));
+                operationServiceImpl.addOperationRecord(operation);
+            }
+        }
         List<ShopInformation> shopInformationList = new ArrayList<>();
 //        goodsCarService.
         BigDecimal sum = BigDecimal.ZERO; // 使用静态常量ZERO来初始化sum为0
@@ -350,7 +356,6 @@ public class GoodsController {
         model.addAttribute("sum", sum.toString());
         model.addAttribute("shopList", shopInformationList);
         model.addAttribute("length",idList.size());
-        UserInformation user = hostHolder.getUser();
         model.addAttribute("user",user);
          return "new/balance";
     }
@@ -393,6 +398,14 @@ public class GoodsController {
     @ResponseBody
     public BaseResponse add(@RequestBody Integer id) {
         UserInformation user = hostHolder.getUser();
+        if (null != user) {
+            // 记录操作数据
+            Operation operation = new Operation();
+            operation.setType("2");
+            operation.setUid(user.getId());
+            operation.setSid(Integer.valueOf(id));
+            operationServiceImpl.addOperationRecord(operation);
+        }
         if (StringUtils.getInstance().isNullOrEmpty(user)) {
             throw new IllegalArgumentException("未登录");
         }
@@ -405,38 +418,4 @@ public class GoodsController {
         goodsCarService.insertSelective(goodsCar);
         return BaseResponse.success();
     }
-
-
-
-    //获取最详细的分类，第三层
-    private Specific selectSpecificBySort(int sort) {
-        return specificeService.selectByPrimaryKey(sort);
-    }
-
-    //获得第二层分类
-    private Classification selectClassificationByCid(int cid) {
-        return classificationService.selectByPrimaryKey(cid);
-    }
-
-    //获得第一层分类
-    private AllKinds selectAllKindsByAid(int aid) {
-        return allKindsService.selectByPrimaryKey(aid);
-    }
-
-    private String getSort(int sort) {
-        StringBuilder sb = new StringBuilder();
-        Specific specific = selectSpecificBySort(sort);
-        int cid = specific.getCid();
-        Classification classification = selectClassificationByCid(cid);
-        int aid = classification.getAid();
-        AllKinds allKinds = selectAllKindsByAid(aid);
-        String allName = allKinds.getName();
-        sb.append(allName);
-        sb.append("-");
-        sb.append(classification.getName());
-        sb.append("-");
-        sb.append(specific.getName());
-        return sb.toString();
-    }
-
 }
