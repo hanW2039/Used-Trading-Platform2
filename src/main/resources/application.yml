@@ -64,5 +64,15 @@ logging:
 #      max-history: 60
 #  path: ./logs
 
-
-
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:8080/xxl-job-admin
+    executor:
+      appname: user-trading-platform
+      ip:
+      port: 9999
+      accessToken:
+      logretentiondays: 1
+      logpath:
+    accessToken: default_token

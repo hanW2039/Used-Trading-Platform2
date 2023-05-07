@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Lenovo
@@ -26,5 +28,10 @@ public class OperationServiceImpl {
             operation.setCount(operations.get(0).getCount() + 1);
             operationMapper.updateRecord(operation);
         }
+    }
+
+    public Map<Integer, List<Operation>> getAllOperationRecords() {
+        List<Operation> operations = operationMapper.selectRecord(new Operation());
+        return operations.stream().collect(Collectors.groupingBy(Operation::getSid));
     }
 }
