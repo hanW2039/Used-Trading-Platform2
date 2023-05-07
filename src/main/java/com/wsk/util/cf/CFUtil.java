@@ -68,8 +68,7 @@ public class CFUtil {
 				Recommender recommender = new CachingRecommender(
 						new GenericUserBasedRecommender(model, neighborhood, userSimilarity));
 				//推荐
-				List<RecommendedItem> recommendations = recommender.recommend(
-						cUser.getId(), CFConstantUtil.cfCount);
+				List<RecommendedItem> recommendations = recommender.recommend(cUser.getId(), CFConstantUtil.cfCount);
 				//输出推荐结果
 				cfPrintUtil.printRecommendResult(recommendations, cUser.getId());
 	            for (RecommendedItem ritem : recommendations) {

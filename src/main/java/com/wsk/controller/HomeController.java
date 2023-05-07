@@ -109,8 +109,9 @@ public class HomeController {
         List<ShopInformation> recommend = null;
         if(1 == page.getCurrent() && hostHolder.getUser() != null) {
             recommend = recommend();
-            if(recommend.size() != 12) {
-                for(int i = 0; i < (12 - recommend.size()); i++) {
+            int size = recommend.size();
+            if(size != 12) {
+                for(int i = 0; i < (12 - size); i++) {
                     recommend.add(list.get(i));
                 }
             }
@@ -157,7 +158,7 @@ public class HomeController {
             if(cfItemIds!=null && !cfItemIds.equals("")){
                 cfItemIdsFinal = cfItemIds;
             }
-            System.out.println("***基于用户的协同过滤推荐算法结束***");
+            log.info("***基于用户的协同过滤推荐算法结束***");
 //            System.out.println("***基于项目（商品）的协同过滤推荐算法开始***");
 //            System.out.println("查询所有订单详情记录");
 //            //查询所有订单详情记录
@@ -174,6 +175,7 @@ public class HomeController {
 //            }
 //            System.out.println("***基于项目（商品）的协同过滤推荐算法结束***");
             //将两次推荐结果查询出来
+            log.info("推荐结果：{}",cfItemIdsFinal);
             if(cfItemIdsFinal!=null && !cfItemIdsFinal.equals("")){
                 String[] ids = cfItemIdsFinal.split(",");
                 for(int i = 0; i < ids.length; i++) {

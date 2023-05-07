@@ -6,9 +6,9 @@ package com.wsk.util.cf;
 public class CFConstantUtil {
 	
 	//推荐数量
-	public static int cfCount = 12;
+	public static int cfCount = 5;
 	
 	// 最近邻数量
-	public static int knn = 7;
+	public static int knn = 5;
 	
 }
