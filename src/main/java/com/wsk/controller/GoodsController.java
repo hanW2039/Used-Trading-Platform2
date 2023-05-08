@@ -4,7 +4,6 @@ import com.wsk.pojo.*;
 import com.wsk.response.BaseResponse;
 import com.wsk.service.*;
 import com.wsk.service.Impl.OperationServiceImpl;
-import com.wsk.token.TokenProccessor;
 import com.wsk.tool.StringUtils;
 import com.wsk.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +19,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by wsk1103 on 2017/5/14.
- */
+
 @Controller
 @Slf4j
 public class GoodsController {
@@ -52,7 +49,7 @@ public class GoodsController {
 
     @RequestMapping("/sellUpload")
     public String sellUpload(Model model, String name, String kind, String price, String modified,
-                             String level, String remark,
+                             String level, String remark, Integer quantity,
                              @RequestParam(value = "image", required = false) MultipartFile image) {
         Map<String, Integer> map = new HashMap<>();
         map.put("数码科技", 1);
@@ -89,8 +86,9 @@ public class GoodsController {
             shopInformation.setRemark(remark);
             shopInformation.setName(name);
             shopInformation.setKindid(map.get(kind));
-            shopInformation.setLevel(Integer.getInteger(level));
+            shopInformation.setLevel(Integer.valueOf(level));
             shopInformation.setUid(hostHolder.getUser().getId());
+            shopInformation.setQuantity(quantity);
             String headerUrl = "/image/" + path;
             shopInformation.setImage(headerUrl);
             shopInformationService.insertSelective(shopInformation);
@@ -211,7 +209,7 @@ public class GoodsController {
                 shopInformation.setKindid(map.get(kind));
             }
             if(!org.apache.commons.lang3.StringUtils.isBlank(level)) {
-                shopInformation.setLevel(Integer.getInteger(level));
+                shopInformation.setLevel(Integer.valueOf(level));
             }
             shopInformation.setId(Integer.valueOf(id));
             shopInformationService.updateByPrimaryKeySelective(shopInformation);
@@ -347,11 +345,13 @@ public class GoodsController {
         }
         List<ShopInformation> shopInformationList = new ArrayList<>();
 //        goodsCarService.
-        BigDecimal sum = BigDecimal.ZERO; // 使用静态常量ZERO来初始化sum为0
+        // 使用静态常量ZERO来初始化sum为0
+        BigDecimal sum = BigDecimal.ZERO;
         for(String id : idList) {
             ShopInformation key = shopInformationService.selectByPrimaryKey(Integer.valueOf(id));
             shopInformationList.add(key);
-            sum = sum.add(key.getPrice()); // 将结果赋值给sum，并且使用add方法获得新的BigDecimal对象
+            // 将结果赋值给sum，并且使用add方法获得新的BigDecimal对象
+            sum = sum.add(key.getPrice());
         }
         model.addAttribute("sum", sum.toString());
         model.addAttribute("shopList", shopInformationList);

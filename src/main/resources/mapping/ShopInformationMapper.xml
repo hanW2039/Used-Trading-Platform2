@@ -132,6 +132,9 @@
       <if test="thumbnails!=null">
         thumbnails,
       </if>
+      <if test="kindid!=null">
+        kindid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -175,6 +178,9 @@
       </if>
       <if test="thumbnails!=null">
         #{thumbnails,jdbcType=VARCHAR},
+      </if>
+      <if test="kindid!=null">
+        #{kindid},
       </if>
     </trim>
   </insert>
@@ -220,6 +226,9 @@
       <if test="thumbnails!=null">
         thumbnails=#{thumbnails,jdbcType=VARCHAR},
       </if>
+      <if test="kindid!=null">
+        kindid=#{kindid},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -262,7 +271,8 @@
     <include refid="all" />
     FROM <include refid="table"/>
     where kindid = #{kindid}
-    limit 1 , 5
+    order by id desc
+    limit 0 , 5
   </select>
 
   <select id="selectByKindidT" resultType="com.wsk.pojo.ShopInformation" >
@@ -270,6 +280,7 @@
     <include refid="all" />
     FROM <include refid="table"/>
     where kindid = #{kindid}
+    order by id desc
   </select>
 
   <select id="selectByPage" resultType="com.wsk.pojo.ShopInformation">

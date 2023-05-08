@@ -1,5 +1,8 @@
 package com.wsk.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.wsk.bean.ShopInformationBean;
 import com.wsk.dao.ScoreRecordMapper;
 import com.wsk.dao.ShopInformationMapper;
@@ -8,11 +11,13 @@ import com.wsk.service.*;
 import com.wsk.service.Impl.OperationServiceImpl;
 import com.wsk.tool.StringUtils;
 import com.wsk.util.HostHolder;
+import com.wsk.util.RedisKeyUtil;
 import com.wsk.util.cf.CFDataModelUtil;
 import com.wsk.util.cf.CFUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * wh
@@ -50,6 +56,9 @@ public class HomeController {
     private OperationServiceImpl operationServiceImpl;
     @Autowired
     private ScoreRecordMapper scoreRecordMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
+
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model){
@@ -94,7 +103,7 @@ public class HomeController {
         }
         List<AllKinds> allKinds = allKindsService.selectAll();
         page.setRows(shopInformationService.getCounts());
-        if(name == null) {
+        if(name == null || name == "") {
             page.setPath("/store");
         }else {
             page.setPath("/store?name=" + name);
@@ -107,8 +116,17 @@ public class HomeController {
         }
         List<ShopInformation> list = shopInformationService.selectByPage(queryDTO);
         List<ShopInformation> recommend = null;
-        if(1 == page.getCurrent() && hostHolder.getUser() != null) {
-            recommend = recommend();
+        if(1 == page.getCurrent() && hostHolder.getUser() != null && !page.getPath().contains("?")) {
+            String redisKey = RedisKeyUtil.getRecommend(hostHolder.getUser().getId().toString());
+            if(redisTemplate.hasKey(redisKey)) {
+                String o = (String) redisTemplate.opsForValue().get(redisKey);
+                recommend = JSONObject.parseArray(o, ShopInformation.class);
+            }else {
+                recommend = recommend();
+//                redisTemplate.opsForList().leftPush(redisKey, recommend);
+                redisTemplate.opsForValue().set(redisKey, JSON.toJSON(recommend).toString());
+                redisTemplate.expire(redisKey, 4, TimeUnit.HOURS);
+            }
             int size = recommend.size();
             if(size != 12) {
                 for(int i = 0; i < (12 - size); i++) {
@@ -116,6 +134,7 @@ public class HomeController {
                 }
             }
             list = recommend;
+
         }
 
         model.addAttribute("allKinds", allKinds);
@@ -161,9 +180,9 @@ public class HomeController {
             log.info("***基于用户的协同过滤推荐算法结束***");
 //            System.out.println("***基于项目（商品）的协同过滤推荐算法开始***");
 //            System.out.println("查询所有订单详情记录");
-//            //查询所有订单详情记录
+//            // 查询所有订单详情记录
 //            List<Orderitem> orderitemList = orderitemService.find(null);
-//            //调用基于项目（商品）的协同过滤推荐算法方法
+//            // 调用基于项目（商品）的协同过滤推荐算法方法
 //            String cfItemIds2 = cfUtil.cfByOrderitemBaseUser(cUser, orderitemList);
 //            //判断是否存在推荐结果
 //            if(cfItemIds2!=null && !cfItemIds2.equals("")){
