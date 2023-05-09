@@ -123,9 +123,12 @@ public class HomeController {
                 recommend = JSONObject.parseArray(o, ShopInformation.class);
             }else {
                 recommend = recommend();
+                recommend.removeIf(Objects::isNull);
 //                redisTemplate.opsForList().leftPush(redisKey, recommend);
-                redisTemplate.opsForValue().set(redisKey, JSON.toJSON(recommend).toString());
-                redisTemplate.expire(redisKey, 4, TimeUnit.HOURS);
+                if(!recommend.isEmpty()) {
+                    redisTemplate.opsForValue().set(redisKey, JSON.toJSON(recommend).toString());
+                    redisTemplate.expire(redisKey, 4, TimeUnit.HOURS);
+                }
             }
             int size = recommend.size();
             if(size != 12) {
