@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService {
             map.put("usernameMessage", "该账号未激活！");
             return map;
         }
+
+        if(userInformation.getLockedflag() == 1) {
+            map.put("usernameMessage", "该账号已禁用");
+            return map;
+        }
         //验证密码
         password = com.wsk.tool.StringUtils.getInstance().getMD5(password);
         String password2 = userPasswordService.selectByUid(userInformation.getId()).getPassword();

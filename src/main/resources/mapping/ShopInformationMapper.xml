@@ -268,8 +268,9 @@
         AND keyword like concat('%', #{keyword},'%');
       </if>
     </where>
-    <if test="offset!=null and limit!=null"></if>
-    limit #{offset},#{limit}
+    <if test="offset!=null and limit!=null">
+      limit #{offset},#{limit}
+    </if>
   </select>
   <select id="selectByKindid" resultType="com.wsk.pojo.ShopInformation" >
     select

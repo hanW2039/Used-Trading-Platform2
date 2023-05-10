@@ -16,6 +16,8 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="isdeleted" property="isdeleted" jdbcType="TINYINT" />
+    <result column="lockedflag" property="lockedflag" jdbcType="TINYINT" />
   </resultMap>
 
   <sql id="table">
@@ -24,8 +26,24 @@
 
   <sql id="all" >
     id, modified, username, phone, realname, clazz, sno, dormitory, gender, createtime, 
-    avatar, status, type, email
+    avatar, status, type, email, isdeleted, lockedflag
   </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.wsk.pojo.QueryDTO" >
+    select
+    <include refid="all" />
+    from <include refid="table"/>
+    where  isdeleted = 0 and lockedflag = 0
+    <if test="offset!=null and limit!=null">
+      limit #{offset},#{limit}
+    </if>
+  </select>
+
+  <select id="getCount" resultType="java.lang.Integer">
+    select count(1)
+    from <include refid="table"/>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="all" />
@@ -203,6 +221,9 @@
       <if test="email != null" >
         email = #{email},
       </if>
+      <if test="lockedflag != null" >
+        lockedflag = #{lockedflag},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -227,4 +248,5 @@
     set status = #{status,jdbcType=INTEGER}
     where phone = #{phone,jdbcType=VARCHAR}
   </update>
+
 </mapper>

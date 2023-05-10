@@ -1,5 +1,6 @@
 package com.wsk.dao;
 
+import com.wsk.pojo.QueryDTO;
 import com.wsk.pojo.UserInformation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,4 +44,8 @@ public interface UserInformationMapper {
     int selectIdByPhone(String phone);
 
     List<UserInformation> getAllForeach(List<Integer> list);
+
+    List<UserInformation> selectAll(QueryDTO queryDTO);
+
+    Integer getCount();
 }

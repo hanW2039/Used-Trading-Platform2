@@ -40,4 +40,7 @@ public class UserInformation implements Serializable {
     private Date createtime;
 
     private String avatar;
+
+    private Byte lockedflag;
+    private Byte isdeleted;
 }

@@ -35,7 +35,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTicketInterceptor)
-                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/**/*.jpg","/**/*.jpg","/**/*.jpeg");
+                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/**/*.jpg","/**/*.jpg","/**/*.jpeg","/admin/**");
 //         security实现登录权限认证
 //        registry.addInterceptor(loginRequiredInteceptor)
 //                .excludePathPatterns("/**/*.css","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg");

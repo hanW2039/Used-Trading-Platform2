@@ -50,11 +50,12 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception {
-        UserInformation user = hostHolder.getUser();
-        if(user != null){
-            modelAndView.addObject("loginUser",user);
+        if(hostHolder != null){
+            UserInformation user = hostHolder.getUser();
+            if(user != null){
+                modelAndView.addObject("loginUser",user);
+            }
         }
-
     }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,Exception ex) throws Exception {
