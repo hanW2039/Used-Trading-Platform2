@@ -40,4 +40,6 @@ public class ShopInformation implements Serializable {
     private String thumbnails;
 
     private Integer kindid;
+
+    private byte status;
 }

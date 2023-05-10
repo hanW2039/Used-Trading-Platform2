@@ -26,7 +26,7 @@
 
   <sql id="all" >
     id, modified, name, level, remark, price, sort, display, quantity, transaction, sales,
-    uid, image,thumbnails, keyword, kindid
+    uid, image,thumbnails, keyword, kindid, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
     select 
@@ -229,6 +229,9 @@
       <if test="kindid!=null">
         kindid=#{kindid},
       </if>
+      <if test="status!=null">
+        status=#{status},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -265,12 +268,14 @@
         AND keyword like concat('%', #{keyword},'%');
       </if>
     </where>
+    <if test="offset!=null and limit!=null"></if>
+    limit #{offset},#{limit}
   </select>
   <select id="selectByKindid" resultType="com.wsk.pojo.ShopInformation" >
     select
     <include refid="all" />
     FROM <include refid="table"/>
-    where kindid = #{kindid}
+    where kindid = #{kindid} and status = 0
     order by id desc
     limit 0 , 5
   </select>
@@ -279,7 +284,7 @@
     select
     <include refid="all" />
     FROM <include refid="table"/>
-    where kindid = #{kindid}
+    where kindid = #{kindid} and status = 0
     order by id desc
   </select>
 
@@ -290,6 +295,7 @@
       <if test="name != null">
         name LIKE CONCAT('%',#{name},'%')
       </if>
+      and status = 0
     </where>
 <!--      order by type desc, score desc, create_time desc-->
     order by modified desc

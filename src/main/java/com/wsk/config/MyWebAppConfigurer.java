@@ -14,12 +14,9 @@ public class MyWebAppConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**", "/images/**", "/css/**", "/js/**", "/img/**", "/toImage/**","/new/**",
-                        "/fonts/**","/plugins/**","/jquery/**")
-                .addResourceLocations("classpath:/mystatic/image/", "classpath:/mystatic/jquery/",
-                        "classpath:/mystatic/images/", "classpath:/mystatic/css/","classpath:/mystatic/jquery/",
-                        "classpath:/mystatic/js/", "classpath:/mystatic/img/", "file:D:/toImage/",
-                        "classpath:/templates/new/");
+        registry.addResourceHandler("/image/**", "/images/**", "/css/**", "/js/**", "/img/**", "/toImage/**","/new/**","/plugins/**","/fonts/**")
+                .addResourceLocations("classpath:/mystatic/image/", "classpath:/mystatic/images/", "classpath:/mystatic/css/", "classpath:/mystatic/js/", "classpath:/mystatic/plugins/", "classpath:/mystatic/fonts/","classpath:/mystatic/img/",
+                        "file:D:/toImage/", "classpath:/templates/new/");
         WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 }
