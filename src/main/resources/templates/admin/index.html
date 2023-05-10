@@ -1,0 +1,77 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+<!--        <div class="content">-->
+<!--            <div class="card card-primary card-outline">-->
+<!--                <div class="card-header">-->
+<!--                    <h3 class="card-title">首页</h3>-->
+<!--                </div> &lt;!&ndash; /.card-body &ndash;&gt;-->
+<!--                <div class="card-body">-->
+<!--                    <div class="panel panel-default">-->
+<!--                        <div style="padding: 10px 0 20px 10px;">-->
+<!--                            <a href="https://gitee.com/newbee-ltd/newbee-mall" target="_blank">-->
+<!--                                <img th:src="@{/admin/dist/img/newbee-logo.png}" style="width: 480px;height: 240px;">-->
+<!--                                -->
+<!--                            </a>-->
+<!--                            <h3>联系作者</h3>-->
+<!--                            <ul>-->
+<!--                                <li>我的邮箱：2449207463@qq.com</li>-->
+<!--                                <li>QQ技术交流群：796794009-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                            <p>newbee-mall 在 GitHub 和国内的码云都创建了代码仓库，如果有人访问 GitHub 比较慢的话，建议在 Gitee 上查看该项目，两个仓库会保持同步更新。</p>-->
+<!--                            <ul>-->
+<!--                                <li><a href="https://github.com/newbee-ltd/newbee-mall" target="_blank">newbee-mall in GitHub</a></li>-->
+<!--                                <li><a href="https://gitee.com/newbee-ltd/newbee-mall" target="_blank">newbee-mall in Gitee</a></li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--        </div>-->
+
+        <div class="container">
+            <h1>欢迎登录管理系统</h1>
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!--&lt;!&ndash; jQuery &ndash;&gt;-->
+<!--<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>-->
+<!--&lt;!&ndash; Bootstrap 4 &ndash;&gt;-->
+<!--<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+<!--&lt;!&ndash; AdminLTE App &ndash;&gt;-->
+<!--<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>-->
+<style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* 或者其他高度值 */
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+    }
+</style>
+</body>
+</html>
