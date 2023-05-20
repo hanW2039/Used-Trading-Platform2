@@ -33,7 +33,6 @@
     select
     <include refid="all" />
     from <include refid="table"/>
-    where  isdeleted = 0 and lockedflag = 0
     <if test="offset!=null and limit!=null">
       limit #{offset},#{limit}
     </if>
